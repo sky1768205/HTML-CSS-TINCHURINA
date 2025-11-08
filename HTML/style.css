@@ -236,7 +236,8 @@ nav a:hover {
   gap: 30px;
 }
 
-.product_item, .product_tem {
+.product_item,
+.product_tem {
   text-align: center;
   background: white;
   padding: 20px;
@@ -244,17 +245,21 @@ nav a:hover {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s, box-shadow 0.3s;
 }
-.product_item:hover, .product_tem:hover {
+.product_item:hover,
+.product_tem:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-.product_item img, .product_tem img {
+.product_item img,
+.product_tem img {
   margin-bottom: 15px;
 }
-.product_item h4, .product_tem h4 {
+.product_item h4,
+.product_tem h4 {
   font-size: 16px;
   margin-bottom: 10px;
 }
-.product_item p, .product_tem p {
+.product_item p,
+.product_tem p {
   font-size: 14px;
   color: #8B7355;
   font-weight: bold;
@@ -359,4 +364,4 @@ nav a:hover {
 }
 .email button:hover {
   background-color: #333;
-}/*# sourceMappingURL=Style.css.map */
+}/*# sourceMappingURL=style.css.map */
