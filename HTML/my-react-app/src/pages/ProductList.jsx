@@ -13,17 +13,16 @@ export default function ProductList() {
     }
 
     useEffect(() => {
-        async function getProducts() {
-            try {
-                const resp = await fetch('http://localhost:3000/api/products')
-                const data = await resp.json()
-                setProducts(data)
-            } catch (error) {
-                console.error('Error fetching products:', error)
-            }
+    async function getProducts() {
+        try {
+            const resp = await fetch('http://localhost:3000/api/products')
+            const result = await resp.json()
+            setProducts(result.data)
+        } catch (error) {
+            console.error('Error fetching products:', error)
         }
-        getProducts()
-    }, [])
+    }
+    getProducts()}, [])
 
     function renderButton(product) {
         const cartItem = cartItems.find(item => item.id === product.id)
@@ -64,7 +63,7 @@ export default function ProductList() {
                                 <div className="relative">
                                     <img
                                         className="w-full h-64 object-cover"
-                                        src={product.image}
+                                        src={`http://localhost:3000/${product.image_url}`}
                                         alt={product.name}
                                     />
                                     {renderButton(product)}
