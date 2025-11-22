@@ -4,6 +4,7 @@ import MainLayout from "./components/MainLayout.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ProductList from "./pages/ProductList.jsx";
 import ProductItemPage from "./pages/ProductItemPage.jsx";
+import AboutPage from "./pages/AboutPage.jsx";
 
 
 
@@ -13,6 +14,7 @@ export const router = createBrowserRouter([
         Component: MainLayout,
         children: [
             {
+                
                 index: true,
                 Component: HomePage
             },
@@ -24,6 +26,10 @@ export const router = createBrowserRouter([
                 path: 'products/:id',
                 Component: ProductItemPage
             },
+            {
+                path: '/about',
+                Component: AboutPage
+            }
 
         ]
     }

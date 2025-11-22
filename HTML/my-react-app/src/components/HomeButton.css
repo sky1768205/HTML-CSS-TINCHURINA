@@ -1,0 +1,77 @@
+.home-button-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.home-button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    background-color: #9e9d9d;
+    color: #0d1b2a;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.home-button:hover {
+    background-color: #ff9900;
+    color: #ffffff;
+}
+
+.lantern {
+    position: absolute;
+    top: -80px;
+    /* Расположение фонаря над кнопкой */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 150px;
+    z-index: 0;
+    animation: glow 2s infinite alternate;
+    /* Анимация мерцания света */
+}
+
+.lantern img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Анимация мерцания света */
+@keyframes glow {
+    from {
+        filter: brightness(1);
+    }
+
+    to {
+        filter: brightness(1.2);
+    }
+}
+
+/* Эффект света от фонаря (опционально) */
+.lantern::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 165, 0, 0.3) 0%, transparent 70%);
+    z-index: -1;
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.5;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,183 @@
+.about-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  
+  
+  color: #e0e1dd; /* Цвет текста */
+  font-family: 'Runic', sans-serif; /* Подставьте ваш шрифт */
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  will-change: transform; 
+}
+
+.background-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8); /* Приглушаем фон */
+  
+   filter: brightness(0.8) blur(1px); /* Добавьте blur */
+}
+
+.fireflies {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.firefly {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffffff;
+}
+
+.raven {
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  width: 150px;
+  z-index: 10;
+}
+
+.content-container {
+  padding: 100px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.content-container h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.content-container p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.additional-elements {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 5;
+}
+
+.line {
+  width: 0;
+  height: 2px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+.title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Добавьте эту строку */
+}
+
+.description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Добавьте эту строку */
+}
+.raven {
+  position: absolute;
+  top: 10%;          /* Отступ от верха */
+  right: 3%;        /* Отступ от правого края */
+  width: 170px;      /* Размер ворона */
+  z-index: 10;
+  pointer-events: none; /* Чтобы не мешал кликам */
+
+  /* Дополнительно: добавьте тень для глубины */
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+.firefly {
+  width: 4px;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffffff;
+}
+/* Растушевка и темный фон */
+.fade-to-dark {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Можно изменить на нужную высоту */
+  background-color: #0d2a1e; /* Темный фон */
+
+  /* Градиент для растушевки */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #0d2a23 80% /* Начинается растушевка с 80% высоты */
+  );
+}
+
+.info-blocks {
+  padding: 100px 50px;
+  max-width: 1200px;
+  margin: 80px auto 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.info-block {
+  width: 30%;
+  padding: 30px;
+  background-color: rgba(13, 42, 29, 0.8); /* Полупрозрачный фон */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.info-block h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #e0e1dd;
+}
+
+.info-block p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #e0e1dd;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .info-blocks {
+    padding: 50px 20px;
+  }
+
+  .info-block {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

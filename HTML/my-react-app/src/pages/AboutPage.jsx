@@ -1,0 +1,190 @@
+// src/pages/AboutPage.jsx
+
+import React, { useEffect, useState } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import Firefly from '../components/Firefly';
+import './AboutPage.css';
+import Dashboard from '../components/Dashboard';
+import HomeButton from '../components/HomeButton';
+
+const AboutPage = () => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    }
+  }, [controls, inView]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
+
+  const ravenVariants = {
+    initial: { x: -100, opacity: 0 },
+    animate: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 50,
+        damping: 10,
+      },
+    },
+  };
+
+  // Анимация для блоков информации
+  const blockVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 300,
+        damping: 20,
+      },
+    },
+    hover: { // Анимация при наведении
+      scale: 1.05,
+      boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10,
+      },
+    },
+  };
+
+  return (
+    <div className="about-page">
+      {/* Фоновое изображение с параллаксом */}
+      <div
+        className="background-image"
+        style={{
+          
+        }}
+      >
+        <img src="/images/фон1.jpg" alt="Лес" />
+      </div>
+
+      {/* Анимированные светлячки */}
+      <div className="fireflies">
+        {[...Array(15)].map((_, i) => (
+          <Firefly key={i} delay={i * 0.3} duration={2 + Math.random()} />
+        ))}
+      </div>
+
+      {/* Ворон */}
+      <motion.div
+        className="raven"
+        animate={{
+          y: [0, -10, 0, 10, 0],
+          rotate: [0, 2, -2, 0],
+          x: [0, 5, -5, 0],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut",
+        }}
+      >
+        <img src="/images/voron.png" alt="Ворон" />
+      </motion.div>
+
+      {/* Основной контент */}
+      <motion.div
+        ref={ref}
+        className="content-container"
+        variants={containerVariants}
+        initial="hidden"
+        animate={controls}
+      >
+        <motion.h1 variants={itemVariants}>О НАС</motion.h1>
+        <motion.p variants={itemVariants}>
+          Добро пожаловать в нашу кофейню, где скандинавская мифология оживает в каждой чашке.
+        </motion.p>
+        <motion.p variants={itemVariants}>
+          Мы создаем уникальную атмосферу, вдохновленную легендами Севера.
+        </motion.p>
+      </motion.div>
+
+      {/* Растушевка и темный фон */}
+      <div className="fade-to-dark">
+        {/* Блоки информации с анимацией */}
+        <div className="info-blocks">
+          <motion.div
+            className="info-block"
+            variants={blockVariants}
+            initial="hidden"
+            whileInView="visible"
+            whileHover="hover" // Анимация при наведении
+            viewport={{ once: true }} // Анимация срабатывает только один раз
+          >
+            <h2>Наша история</h2>
+            <p>Мы начали свой путь с маленькой кофейни в сердце города, вдохновленные легендами Севера.</p>
+          </motion.div>
+
+          <motion.div
+            className="info-block"
+            variants={blockVariants}
+            initial="hidden"
+            whileInView="visible"
+            whileHover="hover" // Анимация при наведении
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }} // Задержка для второго блока
+          >
+            <h2>Наши напитки</h2>
+            <p>Каждый напиток — это маленький шедевр, который вы можете попробовать только у нас.</p>
+          </motion.div>
+
+          <motion.div
+            className="info-block"
+            variants={blockVariants}
+            initial="hidden"
+            whileInView="visible"
+            whileHover="hover" // Анимация при наведении
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }} // Задержка для третьего блока
+          >
+            <h2>Наши гости</h2>
+            <p>Мы гордимся тем, что наши гости приходят к нам не просто за кофе, а за атмосферой.</p>
+          </motion.div>
+        </div>
+        {/* Кнопка "На главную" с фонарем */}
+        <HomeButton />
+      </div>
+    </div>
+  );
+};
+
+export default AboutPage;

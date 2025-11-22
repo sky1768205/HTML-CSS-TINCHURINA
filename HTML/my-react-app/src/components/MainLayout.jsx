@@ -18,7 +18,7 @@ export default function MainLayout() {
                     <div className="flex items-center gap-x-8 mx-auto">
                         <NavLink to="/" >Home</NavLink>
                         <NavLink to="/blog" >Blog</NavLink>
-                        <NavLink to="/about_us" >About</NavLink>
+                        <NavLink to="/about" >About</NavLink>
                         <NavLink to="/products" >Our Products</NavLink>
 
                     </div>
