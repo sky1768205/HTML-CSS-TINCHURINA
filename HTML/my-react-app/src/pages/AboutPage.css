@@ -6,7 +6,7 @@
   
   
   color: #e0e1dd; /* Цвет текста */
-  font-family: 'Runic', sans-serif; /* Подставьте ваш шрифт */
+  font-family: 'Brusnika', sans-serif; /* Подставьте ваш шрифт */
 }
 
 .background-image {
@@ -63,13 +63,13 @@
 }
 
 .content-container h1 {
-  font-size: 3rem;
+  font-size: 5rem;
   margin-bottom: 20px;
   letter-spacing: 2px;
 }
 
 .content-container p {
-  font-size: 1.2rem;
+  font-size: 2rem;
   line-height: 1.6;
   margin-bottom: 20px;
 }
@@ -136,7 +136,7 @@
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    #0d2a23 80% /* Начинается растушевка с 80% высоты */
+    #021e18dd 80% /* Начинается растушевка с 80% высоты */
   );
 }
 
@@ -152,7 +152,7 @@
 .info-block {
   width: 30%;
   padding: 30px;
-  background-color: rgba(13, 42, 29, 0.8); /* Полупрозрачный фон */
+  background-color: rgba(1, 18, 12, 0.8); /* Полупрозрачный фон */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   text-align: center;

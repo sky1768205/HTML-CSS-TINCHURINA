@@ -5,7 +5,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Firefly from '../components/Firefly';
 import './AboutPage.css';
-import Dashboard from '../components/Dashboard';
+import CursorFireflies from '../components/CursorFireflies';
 import HomeButton from '../components/HomeButton';
 
 const AboutPage = () => {
@@ -93,7 +93,7 @@ const AboutPage = () => {
           
         }}
       >
-        <img src="/images/фон1.jpg" alt="Лес" />
+        <img src="/images/фон4.png" alt="Лес" />
       </div>
 
       {/* Анимированные светлячки */}
@@ -118,25 +118,36 @@ const AboutPage = () => {
           ease: "easeInOut",
         }}
       >
-        <img src="/images/voron.png" alt="Ворон" />
+        <img src="/images/вороненокб.png" alt="Ворон" />
       </motion.div>
 
       {/* Основной контент */}
-      <motion.div
-        ref={ref}
-        className="content-container"
-        variants={containerVariants}
-        initial="hidden"
-        animate={controls}
-      >
-        <motion.h1 variants={itemVariants}>О НАС</motion.h1>
-        <motion.p variants={itemVariants}>
-          Добро пожаловать в нашу кофейню, где скандинавская мифология оживает в каждой чашке.
-        </motion.p>
-        <motion.p variants={itemVariants}>
-          Мы создаем уникальную атмосферу, вдохновленную легендами Севера.
-        </motion.p>
-      </motion.div>
+      {/* Основной контент — с эффектом свечения при наведении */}
+<motion.div
+  ref={ref}
+  className="content-container"
+  variants={containerVariants}
+  initial="hidden"
+  animate={controls}
+  whileHover={{
+    textShadow: '0 0 20px rgba(255, 215, 0, 0.8)', // золотое свечение
+    scale: 1.01,
+    transition: { duration: 0.3, ease: "easeOut" }
+  }}
+>
+  <motion.h1
+    variants={itemVariants}
+    style={{ margin: 0 }}
+  >
+    О НАС
+  </motion.h1>
+  <motion.p variants={itemVariants}>
+    Добро пожаловать в нашу кофейню, где скандинавская мифология оживает в каждой чашке.
+  </motion.p>
+  <motion.p variants={itemVariants}>
+    Мы создаем уникальную атмосферу, вдохновленную легендами Севера.
+  </motion.p>
+</motion.div>
 
       {/* Растушевка и темный фон */}
       <div className="fade-to-dark">
@@ -180,6 +191,8 @@ const AboutPage = () => {
             <p>Мы гордимся тем, что наши гости приходят к нам не просто за кофе, а за атмосферой.</p>
           </motion.div>
         </div>
+        {/* Светлячки, следующие за курсором */}
+<CursorFireflies />
         {/* Кнопка "На главную" с фонарем */}
         <HomeButton />
       </div>
