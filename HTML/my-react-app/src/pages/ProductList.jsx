@@ -13,37 +13,38 @@ export default function ProductList() {
     }
 
     useEffect(() => {
-    async function getProducts() {
-        try {
-            const resp = await fetch('http://localhost:3000/api/products')
-            const result = await resp.json()
-            setProducts(result.data)
-        } catch (error) {
-            console.error('Error fetching products:', error)
+        async function getProducts() {
+            try {
+                const resp = await fetch('http://localhost:3000/api/products')
+                const result = await resp.json()
+                setProducts(result.data)
+            } catch (error) {
+                console.error('Error fetching products:', error)
+            }
         }
-    }
-    getProducts()}, [])
+        getProducts()
+    }, [])
 
-    function renderButton(product) {
-        const cartItem = cartItems.find(item => item.id === product.id)
+    // function renderButton(product) {
+    //     const cartItem = cartItems.find(item => item.id === product.id)
 
-        if (!cartItem) {
-            return (
-                <button
-                    onClick={(e) => handleAddToCart(product, e)}
-                    className="absolute bottom-4 right-4 bg-coffee-600 hover:bg-coffee-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
-                >
-                    Add to Cart
-                </button>
-            )
-        } else {
-            return (
-                <div className="absolute bottom-4 right-4 bg-gray-500 text-white px-4 py-2 rounded text-sm font-medium">
-                    In Cart: {cartItem.quantity}
-                </div>
-            )
-        }
-    }
+    //     if (!cartItem) {
+    //         return (
+    //             <button
+    //                 onClick={(e) => handleAddToCart(product, e)}
+    //                 className="absolute bottom-4 right-4 bg-coffee-600 hover:bg-coffee-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
+    //             >
+    //                 Add to Cart
+    //             </button>
+    //         )
+    //     } else {
+    //         return (
+    //             <div className="absolute bottom-4 right-4 bg-gray-500 text-white px-4 py-2 rounded text-sm font-medium">
+    //                 In Cart: {cartItem.quantity}
+    //             </div>
+    //         )
+    //     }
+    // }
 
     return (
         <div className="min-h-screen bg-gray-50 py-8">
@@ -66,7 +67,7 @@ export default function ProductList() {
                                         src={`http://localhost:3000/${product.image_url}`}
                                         alt={product.name}
                                     />
-                                    {renderButton(product)}
+                                    {/* {renderButton(product)} */}
                                 </div>
                                 <div className="p-6">
                                     <h3 className="text-lg font-semibold text-gray-800 mb-2">
