@@ -8,6 +8,7 @@ import AboutPage from "./pages/AboutPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPages from "./pages/RegisterPage.jsx";
+import Account from "./pages/Account.jsx";
 
 
 
@@ -45,7 +46,11 @@ export const router = createBrowserRouter([
             {
                 path: '/register',
                 Component: RegisterPages
-            }
+            },
+            {
+                path: '/account',
+                Component: Account
+            },
 
         ]
     }

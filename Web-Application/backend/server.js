@@ -213,6 +213,51 @@ app.post('/api/shops', async (req, res) => {
     }
 });
 
+// Добавление продажи
+app.post('/api/sales', async (req, res) => {
+    try {
+        const { product_id, shop_id, quantity, total_price, sale_date } = req.body;
+        const result = await db.createSale({
+            product_id: parseInt(product_id),
+            shop_id: shop_id ? parseInt(shop_id) : null,
+            quantity: parseInt(quantity),
+            total_price: parseFloat(total_price),
+            sale_date
+        });
+        res.status(201).json({ success: true, data: result });
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
+    }
+});
+
+// Получение статистики
+app.get('/api/sales/stats', async (req, res) => {
+    try {
+        const { startDate, endDate } = req.query;
+        const stats = await db.getSalesStats({ startDate, endDate });
+        res.json({ success: true, data: stats });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Получение всех продаж
+app.get('/api/sales', async (req, res) => {
+    try {
+        const sales = await db.getAllSales();
+        res.json({
+            success: true,
+            data: sales,
+            count: sales.length
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
 // Корневой маршрут
 app.get('/', (req, res) => {
     res.json({
@@ -236,10 +281,15 @@ app.get('/', (req, res) => {
             shops: {
                 getAll: 'GET /api/shops',
                 create: 'POST /api/shops'
+            },
+            sales: {
+                create: 'POST /api/sales', // Добавление продажи
+                stats: 'GET /api/sales/stats?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD' // Статистика продаж
             }
         }
     });
 });
+
 
 // Middleware для обработки ошибок
 app.use((error, req, res, next) => {

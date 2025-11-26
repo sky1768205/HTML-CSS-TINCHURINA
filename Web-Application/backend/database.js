@@ -69,6 +69,16 @@ class Database {
                     longitude REAL, -- долгота
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 );
+                CREATE TABLE IF NOT EXISTS sales (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    product_id INTEGER NOT NULL,
+                    shop_id INTEGER,
+                    quantity INTEGER NOT NULL,
+                    total_price REAL NOT NULL,
+                    sale_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY(product_id) REFERENCES products(id),
+                    FOREIGN KEY(shop_id) REFERENCES shops(id)
+                );
             `;
 
             this.db.exec(createTablesQuery, (err) => {
@@ -443,6 +453,54 @@ class Database {
             });
         });
     }
+
+    // Добавление продажи
+    createSale(saleData) {
+        return new Promise((resolve, reject) => {
+            const { product_id, shop_id, quantity, total_price, sale_date } = saleData;
+            if (!product_id || !quantity || !total_price) {
+                return reject(new Error('Обязательны product_id, quantity и total_price'));
+            }
+
+            const query = `
+                INSERT INTO sales (product_id, shop_id, quantity, total_price, sale_date)
+                VALUES (?, ?, ?, ?, ?)
+            `;
+
+            this.db.run(query, [product_id, shop_id || null, quantity, total_price, sale_date || new Date()], function(err) {
+                if (err) reject(err);
+                else resolve({
+                    id: this.lastID,
+                    product_id,
+                    shop_id,
+                    quantity,
+                    total_price,
+                    sale_date: sale_date || new Date(),
+                    message: 'Продажа добавлена'
+                });
+            });
+        });
+    }
+
+    // Получение всех продаж
+    getAllSales() {
+        return new Promise((resolve, reject) => {
+            const query = `
+                SELECT s.id, s.product_id, s.shop_id, s.quantity, s.total_price, s.sale_date,
+                    p.name as product_name, sh.address as shop_address
+                FROM sales s
+                LEFT JOIN products p ON s.product_id = p.id
+                LEFT JOIN shops sh ON s.shop_id = sh.id
+                ORDER BY s.sale_date DESC
+            `;
+            this.db.all(query, [], (err, rows) => {
+                if (err) reject(err);
+                else resolve(rows);
+            });
+        });
+    }
+
+
 
     // Метод для закрытия соединения
     close() {
