@@ -33,7 +33,7 @@ export default function HomePage() {
             {/* Прогресс бар */}
             <div className="fixed top-0 left-0 w-full h-1 bg-[#171717]/30 z-50">
                 <div
-                    className="h-full bg-gradient-to-r from-[#2C4B35] to-[#F8F8F9] transition-all duration-300"
+                    className="h-full bg-linear-to-r from-[#2C4B35] to-[#F8F8F9] transition-all duration-300"
                     style={{ width: `${(scrollY / (document.body.scrollHeight - window.innerHeight)) * 100}%` }}
                 ></div>
             </div>

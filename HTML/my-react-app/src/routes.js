@@ -6,6 +6,8 @@ import ProductList from "./pages/ProductList.jsx";
 import ProductItemPage from "./pages/ProductItemPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPages from "./pages/RegisterPage.jsx";
 
 
 
@@ -36,6 +38,14 @@ export const router = createBrowserRouter([
                 Component: CartPage
 
             },
+            {
+                path: '/login',
+                Component: LoginPage
+            },
+            {
+                path: '/register',
+                Component: RegisterPages
+            }
 
         ]
     }
