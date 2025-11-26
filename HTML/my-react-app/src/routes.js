@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage.jsx";
 import ProductList from "./pages/ProductList.jsx";
 import ProductItemPage from "./pages/ProductItemPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
+import CartPage from "./pages/CartPage.jsx";
 
 
 
@@ -14,7 +15,7 @@ export const router = createBrowserRouter([
         Component: MainLayout,
         children: [
             {
-                
+
                 index: true,
                 Component: HomePage
             },
@@ -29,7 +30,12 @@ export const router = createBrowserRouter([
             {
                 path: '/about',
                 Component: AboutPage
-            }
+            },
+            {
+                path: 'cart',
+                Component: CartPage
+
+            },
 
         ]
     }
