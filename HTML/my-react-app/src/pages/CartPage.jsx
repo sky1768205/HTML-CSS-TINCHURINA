@@ -29,113 +29,149 @@ export default function CartPage() {
 
     if (cart.length === 0) {
         return (
-            <div className="p-4 text-start min-h-screen bg-[#171717] text-[#F8F8F9]">
-                <h1 className="text-3xl font-bold mb-8 font-serif">Корзина Odin's Brew</h1>
-                <div className="bg-[#2C4B35]/20 p-12 rounded-2xl border border-[#2C4B35]/30">
-                    <p className="text-xl mb-8 text-[#F8F8F9]/80">Ваша корзина пуста</p>
-                    <button
-                        onClick={continueShopping}
-                        className="bg-[#2C4B35] text-[#F8F8F9] py-4 px-12 rounded-xl font-semibold text-lg transition-all duration-300 border border-[#2C4B35] hover:bg-[#1E3525] hover:border-[#F8F8F9]/30"
-                    >
-                        Найти свои сокровища
-                    </button>
+            <div className="min-h-screen relative overflow-hidden">
+                {/* Фон */}
+                <div
+                    className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
+                    style={{
+                        backgroundImage: 'url(/images/фон-катлог.jpg)',
+                    }}
+                />
+
+                {/* Затемнение фона */}
+                <div className="fixed top-0 left-0 w-full h-full bg-[#171717]/40 pointer-events-none" />
+
+                <div className="min-h-screen bg-[#171717]/40 backdrop-blur-sm relative z-10 flex items-center justify-center p-8">
+                    <div className="text-center max-w-md">
+                        <div className="text-6xl mb-6 text-[#F8F8F9]">☕</div>
+                        <h1 className="text-3xl font-light text-[#F8F8F9] mb-4">Корзина пуста</h1>
+                        <p className="text-[#F8F8F9]/80 mb-8">Начните свое путешествие по меню</p>
+                        <button
+                            onClick={continueShopping}
+                            className="bg-gradient-to-r from-[#2C4B35] to-[#1E3525] text-[#F8F8F9] px-8 py-3 rounded-xl font-medium hover:from-[#1E3525] hover:to-[#2C4B35] transition-colors shadow-2xl"
+                        >
+                            Исследовать меню
+                        </button>
+                    </div>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="p-4 min-h-screen bg-[#171717] text-[#F8F8F9]">
-            <h1 className="text-3xl font-bold mb-8 font-serif">Корзина Odin's Brew</h1>
+        <div className="min-h-screen relative overflow-hidden">
+            {/* Фон */}
+            <div
+                className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
+                style={{
+                    backgroundImage: 'url(/images/фон.jpg)',
+                }}
+            />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 space-y-6">
-                    {cart.map((product) => (
-                        <div key={product.id} className="bg-[#2C4B35]/10 rounded-2xl p-6 border border-[#2C4B35]/20 hover:border-[#2C4B35]/40 transition-all duration-300">
-                            <div className="flex items-start gap-6">
-                                <img
-                                    className="w-28 h-28 object-cover rounded-xl border border-[#2C4B35]/30"
-                                    src={`http://localhost:3000/${product.image_url}`}
-                                    alt={product.title}
-                                />
-                                <div className="flex-1">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <h3 className="font-semibold text-[#F8F8F9] text-xl">
-                                            {product.title}
-                                        </h3>
-                                        <button
-                                            onClick={() => removeFromCart(product.id)}
-                                            className="text-[#F8F8F9]/60 hover:text-[#F8F8F9] text-2xl transition-colors hover:scale-110"
-                                        >
-                                            ✕
-                                        </button>
-                                    </div>
-                                    <div className="flex items-center gap-6 mb-4">
-                                        <Counter quantity={product.quantity} id={product.id} />
-                                        <span className="text-[#F8F8F9]/80 text-lg">${product.price}</span>
-                                    </div>
-                                    <div className="text-right">
-                                        <span className="text-2xl font-bold text-[#2C4B35]">
-                                            ${product.price * product.quantity}
-                                        </span>
+            {/* Затемнение фона */}
+            <div className="fixed top-0 left-0 w-full h-full bg-[#171717]/30 pointer-events-none" />
+
+            <div className="relative z-10 min-h-screen p-8">
+                <div className="max-w-6xl mx-auto">
+                    <h1 className="text-4xl font-light text-[#F8F8F9] mb-8">
+                        Сокровищница
+                    </h1>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Список товаров */}
+                        <div className="lg:col-span-2 space-y-6">
+                            {cart.map((product) => (
+                                <div
+                                    key={product.id}
+                                    className="bg-[#2c463393] backdrop-blur-sm rounded-2xl p-6 border border-[#F8F8F9]/20 shadow-2xl"
+                                >
+                                    <div className="flex items-center gap-6">
+                                        <img
+                                            className="w-24 h-24 object-cover rounded-xl border-2 border-[#F8F8F9]/30"
+                                            src={`/${product.image_url}`}
+                                            alt={product.name}
+                                        />
+                                        <div className="flex-1">
+                                            <div className="flex justify-between items-start mb-3">
+                                                <h3 className="font-medium text-[#F8F8F9] text-lg">
+                                                    {product.name}
+                                                </h3>
+                                                <button
+                                                    onClick={() => removeFromCart(product.id)}
+                                                    className="text-[#F8F8F9]/60 hover:text-red-400 transition-colors p-1"
+                                                >
+                                                    ✕
+                                                </button>
+                                            </div>
+                                            <div className="flex items-center gap-6">
+                                                <Counter quantity={product.quantity} id={product.id} />
+                                                <span className="text-[#F8F8F9]/80 text-lg">${product.price}</span>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <span className="text-xl font-medium text-[#F8F8F9]">
+                                                ${(product.price * product.quantity).toFixed(2)}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
+                            ))}
+                        </div>
+
+                        {/* Панель заказа */}
+                        <div className="bg-[#2c463393] backdrop-blur-sm rounded-2xl p-6 border border-[#F8F8F9]/20 shadow-2xl h-fit">
+                            <h3 className="text-2xl font-light text-[#F8F8F9] mb-6">Рунный заказ</h3>
+                            <div className="mb-6">
+                                <p className="text-[#F8F8F9]/80 mb-2">{totalItems} сокровищ</p>
+                                <p className="text-3xl font-light text-[#F8F8F9]">${totalPrice.toFixed(2)}</p>
+                            </div>
+
+                            <div className="space-y-4 mb-6">
+                                <input
+                                    type="text"
+                                    placeholder="Имя "
+                                    className="w-full p-4 bg-[#171717]/50 border border-[#F8F8F9]/30 rounded-xl text-[#F8F8F9] placeholder-[#F8F8F9]/60 focus:outline-none focus:border-[#2C4B35]"
+                                />
+                                <input
+                                    type="tel"
+                                    placeholder="Фамилия"
+                                    className="w-full p-4 bg-[#171717]/50 border border-[#F8F8F9]/30 rounded-xl text-[#F8F8F9] placeholder-[#F8F8F9]/60 focus:outline-none focus:border-[#2C4B35]"
+                                />
+                                <input
+                                    type="email"
+                                    placeholder="Почта"
+                                    className="w-full p-4 bg-[#171717]/50 border border-[#F8F8F9]/30 rounded-xl text-[#F8F8F9] placeholder-[#F8F8F9]/60 focus:outline-none focus:border-[#2C4B35]"
+                                />
+                            </div>
+
+                            <button
+                                onClick={handleOrder}
+                                className="w-full bg-gradient-to-r from-[#2C4B35] to-[#1E3525] text-[#F8F8F9] py-4 rounded-xl font-medium text-lg hover:from-[#1E3525] hover:to-[#2C4B35] transition-colors shadow-2xl"
+                            >
+                                СКОВАТЬ ЗАКЛЯТИЕМ
+                            </button>
+                        </div>
+                    </div>
+
+                    {showSuccess && (
+                        <div className="fixed inset-0 bg-[#171717]/80 backdrop-blur-sm flex items-center justify-center z-50">
+                            <div className="bg-[#2c4633] border border-[#F8F8F9]/20 p-8 rounded-2xl shadow-2xl max-w-sm text-center mx-4">
+
+                                <h3 className="text-2xl font-light text-[#F8F8F9] mb-4">Заклятие свершилось!</h3>
+                                <p className="text-[#F8F8F9]/80 mb-6">
+                                    Ворон уже летит с вестью о вашем заказе
+                                </p>
+                                <button
+                                    onClick={onCloseSuccess}
+                                    className="bg-gradient-to-r from-[#2C4B35] to-[#1E3525] text-[#F8F8F9] px-8 py-3 rounded-xl font-medium hover:from-[#1E3525] hover:to-[#2C4B35] transition-colors shadow-lg"
+                                >
+                                    Продолжить путь
+                                </button>
                             </div>
                         </div>
-                    ))}
-                </div>
-
-                <div className="bg-[#2C4B35]/20 p-8 rounded-2xl border border-[#2C4B35]/30 h-fit">
-                    <h3 className="text-2xl font-bold mb-6 font-serif">Сбор даров</h3>
-                    <div className="mb-8">
-                        <p className="text-lg mb-3 text-[#F8F8F9]/80">{totalItems} сокровищ в пути</p>
-                        <p className="text-3xl font-bold text-[#2C4B35]">Всего ${totalPrice}</p>
-                    </div>
-
-                    <div className="space-y-4 mb-8">
-                        <input
-                            type="text"
-                            placeholder="Имя викинга"
-                            className="w-full p-4 bg-[#171717]/50 border border-[#2C4B35]/30 rounded-xl text-[#F8F8F9] placeholder-[#F8F8F9]/40 focus:outline-none focus:border-[#2C4B35]"
-                        />
-                        <input
-                            type="tel"
-                            placeholder="Рунический знак"
-                            className="w-full p-4 bg-[#171717]/50 border border-[#2C4B35]/30 rounded-xl text-[#F8F8F9] placeholder-[#F8F8F9]/40 focus:outline-none focus:border-[#2C4B35]"
-                        />
-                        <input
-                            type="email"
-                            placeholder="Весть от ворона"
-                            className="w-full p-4 bg-[#171717]/50 border border-[#2C4B35]/30 rounded-xl text-[#F8F8F9] placeholder-[#F8F8F9]/40 focus:outline-none focus:border-[#2C4B35]"
-                        />
-                    </div>
-
-                    <button
-                        onClick={handleOrder}
-                        className="w-full bg-[#2C4B35] text-[#F8F8F9] py-4 rounded-xl font-semibold text-lg transition-all duration-300 border border-[#2C4B35] hover:bg-[#1E3525] hover:border-[#F8F8F9]/30"
-                    >
-                        Отправить в путь
-                    </button>
+                    )}
                 </div>
             </div>
-
-            {showSuccess && (
-                <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-                    <div className="bg-[#2C4B35] text-[#F8F8F9] p-8 rounded-2xl border border-[#F8F8F9]/20 max-w-md text-center">
-                        <div className="text-4xl mb-4">🐦‍⬛</div>
-                        <h3 className="text-2xl font-bold mb-4 font-serif">Ворон в пути!</h3>
-                        <p className="text-lg mb-6 text-[#F8F8F9]/80">
-                            Ваши дары приняты. Ждите вести от наших воронов!
-                        </p>
-                        <button
-                            onClick={onCloseSuccess}
-                            className="bg-[#F8F8F9] text-[#2C4B35] px-8 py-3 rounded-xl font-semibold hover:bg-[#2C4B35] hover:text-[#F8F8F9] transition-all duration-300 border border-[#2C4B35]"
-                        >
-                            Продолжить странствие
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
