@@ -142,7 +142,7 @@ export default function ProductItemPage() {
                                     <div className="relative">
                                         <img
                                             className="w-full h-96 object-cover rounded-xl shadow-lg"
-                                            src={`/${product.image_url}`}
+                                            src={`http://localhost:3000/${product.image_url}`}
                                             alt={product.name}
                                             onError={(e) => {
                                                 e.target.src = '/images/placeholder.jpg'

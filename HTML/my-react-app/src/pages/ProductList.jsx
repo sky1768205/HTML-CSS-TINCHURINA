@@ -119,7 +119,7 @@ export default function CategoryPage() {
                                         <div className="relative overflow-hidden">
                                             <img
                                                 className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-700"
-                                                src={`/${product.image_url}`}
+                                                src={`http://localhost:3000/${product.image_url}`}
                                                 alt={product.name}
                                                 onError={(e) => {
                                                     e.target.src = '/images/placeholder.jpg'

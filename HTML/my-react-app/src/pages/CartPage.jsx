@@ -88,7 +88,7 @@ export default function CartPage() {
                                     <div className="flex items-center gap-6">
                                         <img
                                             className="w-24 h-24 object-cover rounded-xl border-2 border-[#F8F8F9]/30"
-                                            src={`/${product.image_url}`}
+                                            src={`http://localhost:3000/${product.image_url}`}
                                             alt={product.name}
                                         />
                                         <div className="flex-1">
