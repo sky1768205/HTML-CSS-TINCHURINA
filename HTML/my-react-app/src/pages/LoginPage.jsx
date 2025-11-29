@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../stores/stores";
+import styles from "./RegisterPages.module.css";
 
 export default function LoginPage() {
     const [form, setForm] = useState({ email: "", password: "" });
@@ -36,19 +37,74 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="max-w-md mx-auto mt-20 p-6 border rounded-xl">
-            <h2 className="text-2xl font-bold mb-4">Вход</h2>
+         <div className="about-page">
+      {/* Фоновое изображение с параллаксом */}
+      <div
+        className="background-image"
+        style={{
+          
+        }}
+      >
+        <img src="/images/registration.jpg" alt="Лес" />
+      </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <input type="email" name="email" placeholder="Email" className="border p-2 rounded" onChange={handleChange} />
-                <input type="password" name="password" placeholder="Пароль" className="border p-2 rounded" onChange={handleChange} />
+            {/* Основной контейнер формы */}
+            <div className={styles.formContainer}>
+                <div className={styles.formCard}>
+                    <div className={styles.header}>
+                        <h2>Добро пожаловать</h2> <h2>в Лес Магии</h2>
+                        <div className={styles.divider}></div>
+                    </div>
 
-                <button type="submit" className="bg-green-500 text-white p-2 rounded hover:bg-green-600">
-                    Войти
-                </button>
-            </form>
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                        <div className={styles.field}>
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="your@email.com"
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-            {message && <p className="mt-4 text-center">{message}</p>}
+                        <div className={styles.field}>
+                            <label>Пароль</label>
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="••••••••"
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <button type="submit" className={styles.submitButton}>
+                            Войти
+                        </button>
+                    </form>
+
+                    {message && (
+                        <div className={`${styles.message} ${message.includes('успешный') ? styles.success : styles.error}`}>
+                            {message}
+                        </div>
+                    )}
+
+                    <p className={styles.footerText}>
+                        Вступая в наш лес, вы соглашаетесь с магическими правилами
+                    </p>
+                </div>
+            </div>
+
+            {/* Декоративные элементы */}
+            <div className={styles.particle1}></div>
+            <div className={styles.particle2}></div>
+            <div className={styles.particle3}></div>
+            <div className={styles.particle4}></div>
+            <div className={styles.particle5}></div>
+
+            <div className={styles.runeTopLeft}>ᛋ</div>
+            <div className={styles.runeBottomRight}>ᚦ</div>
         </div>
     );
 }

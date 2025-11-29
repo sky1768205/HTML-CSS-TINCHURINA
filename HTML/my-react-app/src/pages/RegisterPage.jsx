@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./RegisterPages.module.css";
 
 export default function RegisterPages() {
     const [form, setForm] = useState({
@@ -31,43 +32,85 @@ export default function RegisterPages() {
     }
 
     return (
-        <div className="max-w-md mx-auto mt-20 p-6 border rounded-xl">
-            <h2 className="text-2xl font-bold mb-4">Регистрация</h2>
+          <div className="about-page">
+      {/* Фоновое изображение с параллаксом */}
+      <div
+        className="background-image"
+        style={{
+          
+        }}
+      >
+        <img src="/images/registration.jpg" alt="Лес" />
+      </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Ваше имя"
-                    className="border p-2 rounded"
-                    onChange={handleChange}
-                />
+            {/* Основной контейнер формы */}
+            <div className={styles.formContainer}>
+                <div className={styles.formCard}>
+                    <div className={styles.header}>
+                        <h2>Войдите в Лес Магии</h2>
+                        <div className={styles.divider}></div>
+                    </div>
 
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    className="border p-2 rounded"
-                    onChange={handleChange}
-                />
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                        <div className={styles.field}>
+                            <label>Ваше имя</label>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Ваше имя..."
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Пароль"
-                    className="border p-2 rounded"
-                    onChange={handleChange}
-                />
+                        <div className={styles.field}>
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="your@email.com"
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-                >
-                    Зарегистрироваться
-                </button>
-            </form>
+                        <div className={styles.field}>
+                            <label>Пароль</label>
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="••••••••"
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-            {message && <p className="mt-4 text-center">{message}</p>}
+                        <button type="submit" className={styles.submitButton}>
+                            Зарегистрироваться
+                        </button>
+                    </form>
+
+                    {message && (
+                        <div className={`${styles.message} ${message.includes('успешна') ? styles.success : styles.error}`}>
+                            {message}
+                        </div>
+                    )}
+
+                    <p className={styles.footerText}>
+                        Вступая в наш лес, вы соглашаетесь с магическими правилами
+                    </p>
+                </div>
+            </div>
+
+            {/* Декоративные элементы */}
+            <div className={styles.particle1}></div>
+            <div className={styles.particle2}></div>
+            <div className={styles.particle3}></div>
+            <div className={styles.particle4}></div>
+            <div className={styles.particle5}></div>
+
+            <div className={styles.runeTopLeft}>ᛋ</div>
+            <div className={styles.runeBottomRight}>ᚦ</div>
         </div>
     );
 }

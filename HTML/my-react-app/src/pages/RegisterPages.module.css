@@ -1,0 +1,211 @@
+/* RegisterPages.module.css */
+
+.registerPage {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: 'Caveat', cursive;
+    background-color: #000;
+}
+
+/* --- Фоновое изображение --- */
+.backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+.backgroundImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6) contrast(1.2) saturate(0.9);
+}
+
+/* Полупрозрачный затемняющий слой */
+.registerPage::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* ← Более прозрачный, как вы просили */
+    z-index: -1;
+}
+
+/* --- Основной контейнер формы --- */
+.formContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+    z-index: 1;
+    
+}
+
+.formCard {
+    width: 100%;
+    max-width: 28rem;
+    background: transparent;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    background-color: #00000088;
+}
+
+/* --- Заголовок --- */
+.header h2 {
+    font-size: 50px; /* 30px */
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    letter-spacing: 1px;
+}
+
+.divider {
+    width: 3rem;
+    height: 2px;
+    background: linear-gradient(to right, #16a34a, #065f46);
+    margin: 0.75rem auto;
+    border-radius: 999px;
+}
+
+/* --- Поля формы --- */
+.field {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.field label {
+    display: block;
+    font-size: 30px;
+    color: #e5e7eb;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+.field input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(22, 163, 74, 0.3);
+    border-radius: 0.75rem;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+.field input::placeholder {
+    color: #9ca3af;
+}
+
+.field input:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+}
+
+/* --- Кнопка --- */
+.submitButton {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(22, 163, 74, 0.5);
+    border-radius: 0.75rem;
+    color: white;
+    font-family: inherit;
+    font-size: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+.submitButton:hover {
+    background: rgba(6, 92, 70, 0.2);
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+}
+
+/* --- Сообщение --- */
+.message {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+.success {
+    background: rgba(22, 163, 74, 0.1);
+    color: #6ee7b7;
+    border: 1px solid rgba(22, 163, 74, 0.3);
+}
+
+.error {
+    background: rgba(220, 38, 38, 0.1);
+    color: #fca5a5;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+/* --- Подпись --- */
+.footerText {
+    margin-top: 2rem;
+    font-size: 20px;
+    color: #9ca3af;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+/* --- Частицы (анимированные точки) --- */
+.particle1, .particle2, .particle3, .particle4, .particle5 {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.2;
+}
+
+.particle1 { top: 10%; right: 10%; animation: pulse 3s infinite; }
+.particle2 { bottom: 20%; left: 20%; animation: bounce 2s infinite; }
+.particle3 { top: 50%; left: 25%; animation: pulse 3s infinite 1s; }
+.particle4 { top: 25%; left: 25%; animation: ping 2.5s infinite; }
+.particle5 { top: 75%; right: 25%; animation: ping 2.5s infinite 1s; }
+
+/* --- Руны --- */
+.runeTopLeft, .runeBottomRight {
+    position: absolute;
+    font-size: 1.5rem;
+    opacity: 0.25;
+    pointer-events: none;
+}
+
+.runeTopLeft { top: 1.25rem; left: 1.25rem; transform: rotate(12deg); color: #16a34a; }
+.runeBottomRight { bottom: 1.25rem; right: 1.25rem; transform: rotate(-12deg); color: #3b82f6; }
+
+/* --- Анимации --- */
+@keyframes pulse {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes ping {
+    0% { transform: scale(1); opacity: 0.2; }
+    70%, 100% { transform: scale(2); opacity: 0; }
+}
