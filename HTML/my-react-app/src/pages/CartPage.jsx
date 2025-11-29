@@ -32,9 +32,9 @@ export default function CartPage() {
             <div className="min-h-screen relative overflow-hidden">
                 {/* Фон */}
                 <div
-                    className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
+                    className="fixed top-0 left-0 w-full h-full bg-cover bg-center grayscale"
                     style={{
-                        backgroundImage: 'url(/images/фон-катлог.jpg)',
+                        backgroundImage: 'url(/images/фон.jpg)'
                     }}
                 />
 

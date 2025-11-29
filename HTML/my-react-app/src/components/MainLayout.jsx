@@ -45,14 +45,14 @@ export default function MainLayout() {
                                     ODIN'S BREW
                                 </NavLink>
 
-                                <div className="flex items-center gap-x-8 mx-auto">
+                                <div className="flex text-white items-center gap-x-8 mx-auto">
                                     {[
                                         { to: "/", name: "Домой", rune: "ᚺ" },
                                         { to: "/blog", name: "Легенды", rune: "ᛊ" },
                                         { to: "/about", name: "Сага о нас", rune: "ᚱ" },
                                         { to: "/products", name: "Эликсиры", rune: "ᛗ" },
-                                        { to: "/login", name: "Вход", rune: "ᛗ"},
-                                        { to: "/register", name: "Регистрацияы", rune: "ᛗ"},
+                                        { to: "/login", name: "Вход", rune: "ᛗ" },
+                                        { to: "/register", name: "Регистрацияы", rune: "ᛗ" },
                                     ].map((item, index) => (
                                         <NavLink
                                             key={item.to}
@@ -121,6 +121,6 @@ export default function MainLayout() {
                 </div>
             </CartContext>
         </AuthContext>
-        
+
     )
 }
