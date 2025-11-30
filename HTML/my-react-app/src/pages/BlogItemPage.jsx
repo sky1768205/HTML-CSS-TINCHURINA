@@ -115,13 +115,13 @@ export default function BlogItemPage() {
             <div className="fixed top-0 left-0 w-full h-full bg-[#171717]/40 pointer-events-none" />
 
             {/* Основной контент */}
-            <div className="relative z-10 min-h-screen">
+            <div className="relative z-10 min-h-screen font-[Chalkduster]">
                 <div className="p-8">
                     <div className="max-w-6xl mx-auto">
                         {/* Кнопка назад */}
                         <button
                             onClick={() => window.history.back()}
-                            className="mb-8 text-[#F8F8F9] hover:text-gray-200 transition-colors flex items-center gap-2"
+                            className="font-[Chalkduster] mb-8 text-[#F8F8F9] hover:text-gray-200 transition-colors flex items-center gap-2"
                         >
                             <span className="text-xl">←</span>
                             <span>Назад к блогу</span>
