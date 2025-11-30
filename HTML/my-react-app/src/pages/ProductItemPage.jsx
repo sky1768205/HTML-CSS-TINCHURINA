@@ -11,18 +11,42 @@ export default function ProductItemPage() {
     const [scrollProgress, setScrollProgress] = useState(0)
     const [loading, setLoading] = useState(false);
 
-    function addToCart(e) {
-        e.preventDefault();
-        e.stopPropagation();
+    const updateCartQuantity = (newQuantity) => {
+        if (newQuantity === 0) {
+            // Удаляем товар из корзины
+            setCart(cart.filter(item => item.id !== product.id));
+        } else {
+            const existingItem = cart.find(element => element.id === product.id);
 
-        if (!cart.find(element => element.id === product.id)) {
-            setCart([
-                ...cart,
-                {
-                    ...product,
-                    quantity: 1
-                }
-            ]);
+            if (existingItem) {
+                // Обновляем количество существующего товара
+                setCart(cart.map(item =>
+                    item.id === product.id
+                        ? { ...item, quantity: newQuantity }
+                        : item
+                ));
+            } else {
+                // Добавляем новый товар
+                setCart([
+                    ...cart,
+                    {
+                        ...product,
+                        quantity: newQuantity
+                    }
+                ]);
+            }
+        }
+    }
+
+    const handleAdd = () => {
+        const currentQuantity = cart.find(item => item.id === product.id)?.quantity || 0;
+        updateCartQuantity(currentQuantity + 1);
+    }
+
+    const handleRemove = () => {
+        const currentQuantity = cart.find(item => item.id === product.id)?.quantity || 0;
+        if (currentQuantity > 0) {
+            updateCartQuantity(currentQuantity - 1);
         }
     }
 
@@ -40,7 +64,7 @@ export default function ProductItemPage() {
     useEffect(() => {
         async function getProduct() {
             try {
-                setLoading(true); // включаем загрузку
+                setLoading(true);
                 const resp = await fetch(`http://localhost:3000/api/products/${id}`)
                 const data = await resp.json()
 
@@ -70,11 +94,11 @@ export default function ProductItemPage() {
     }, [id])
 
     if (loading || !product) {
-        return (
-            <LoadingPage />
-        );
+        return <LoadingPage />;
     }
 
+    const cartItem = cart.find(element => element.id === product.id);
+    const quantity = cartItem?.quantity || 0;
 
     return (
         <div className="min-h-screen relative overflow-hidden">
@@ -82,14 +106,13 @@ export default function ProductItemPage() {
             <div
                 className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
                 style={{
-                    backgroundImage: 'url(/images/фон-катлог.jpg)',
+                    backgroundImage: 'url(/images/чб.jpg)',
                     transform: `translateY(${scrollProgress * 30}px)`,
                 }}
             />
 
             {/* Затемнение фона */}
             <div className="fixed top-0 left-0 w-full h-full bg-black/20 pointer-events-none" />
-
 
             <motion.div
                 className="fixed top-1/3 right-8 z-10"
@@ -183,16 +206,31 @@ export default function ProductItemPage() {
                                     </div>
 
                                     <div>
-                                        {!cart.find(element => element.id === product.id) ? (
+                                        {quantity === 0 ? (
                                             <button
-                                                onClick={addToCart}
-                                                className="w-full bg-[#2C4B35] hover:bg-[#1E3525] text-white py-4 rounded-xl font-medium text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                                                onClick={handleAdd}
+                                                className="w-full bg-[#2C4B35] hover:bg-[#1E3525] text-white py-4 rounded-xl font-medium text-lg transition-all duration-300 hover:scale-105 shadow-lg"
                                             >
                                                 ДОБАВИТЬ В КОРЗИНУ
                                             </button>
                                         ) : (
-                                            <div className="w-full bg-gray-400 text-white py-4 rounded-xl font-medium text-lg text-center shadow">
-                                                Товар в корзине
+                                            <div className="flex items-center justify-between bg-[#2C4B35] rounded-xl p-1">
+                                                <button
+                                                    onClick={handleRemove}
+                                                    className="w-12 h-12 bg-white/20 text-white rounded-xl flex items-center justify-center hover:bg-white/30 transition-colors text-xl font-bold"
+                                                >
+                                                    -
+                                                </button>
+                                                <div className="flex-1 text-center">
+                                                    <div className="text-white font-bold text-lg">{quantity} шт.</div>
+                                                    <div className="text-white/80 text-sm">в корзине</div>
+                                                </div>
+                                                <button
+                                                    onClick={handleAdd}
+                                                    className="w-12 h-12 bg-white/20 text-white rounded-xl flex items-center justify-center hover:bg-white/30 transition-colors text-xl font-bold"
+                                                >
+                                                    +
+                                                </button>
                                             </div>
                                         )}
                                     </div>

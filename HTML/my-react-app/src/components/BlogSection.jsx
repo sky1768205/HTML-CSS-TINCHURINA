@@ -1,7 +1,10 @@
 // components/BlogSection.jsx
 import React from 'react';
+import { useNavigate } from 'react-router';
 
 const BlogSection = () => {
+    const navigate = useNavigate();
+
     const blogPosts = [
         {
             id: 1,
@@ -26,6 +29,10 @@ const BlogSection = () => {
         },
     ];
 
+    const handleImageClick = () => {
+        navigate('/blog');
+    };
+
     return (
         <section className="py-32 bg-[#171717]/60 backdrop-blur-sm relative">
             <div className="container mx-auto px-4">
@@ -35,7 +42,10 @@ const BlogSection = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {blogPosts.map(post => (
                         <article key={post.id} className="bg-[#2C4B35]/10 rounded-2xl overflow-hidden shadow-2xl border border-[#2C4B35]/20 hover:border-[#2C4B35]/40 transition-all duration-500 transform hover:-translate-y-2">
-                            <div className="relative overflow-hidden">
+                            <div
+                                className="relative overflow-hidden cursor-pointer"
+                                onClick={handleImageClick}
+                            >
                                 <img
                                     src={post.image}
                                     alt={post.title}
