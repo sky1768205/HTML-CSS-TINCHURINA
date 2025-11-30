@@ -27,7 +27,7 @@ export default function Footer() {
     }, []);
 
     return (
-        <footer className="text-white p-8 relative overflow-hidden">
+        <footer className="font-[Chalkduster] text-white p-8 relative overflow-hidden">
             {/* Анимационный слой */}
             <div className="absolute inset-0 pointer-events-none">
                 {/* Еле заметное свечение */}
@@ -58,23 +58,23 @@ export default function Footer() {
             </div>
 
             {/* Контент футера */}
-            <div className="max-w-6xl mx-auto relative z-10">
+            <div className="font-[Chalkduster] max-w-6xl mx-auto relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                     {/* Brand Section */}
                     <div>
-                        <h2 className="text-2xl font-bold mb-4">ODIN'S BREW</h2>
-                        <p className="text-gray-300 mb-2">
+                        <h2 className="font-[Chalkduster] text-2xl font-bold mb-4">ODIN'S BREW</h2>
+                        <p className="font-[Chalkduster] text-gray-300 mb-2">
                             Скандинавский кофе с 2024 года.
                         </p>
-                        <p className="text-gray-300">
+                        <p className="font-[Chalkduster] text-gray-300">
                             От Вальхаллы к вашему утреннему ритуалу.
                         </p>
                     </div>
 
                     {/* Menu Section */}
                     <div>
-                        <h3 className="font-semibold mb-4 text-lg">МЕНЮ</h3>
-                        <ul className="space-y-2 text-gray-300">
+                        <h3 className="font-[Chalkduster] font-semibold mb-4 text-lg">МЕНЮ</h3>
+                        <ul className="font-[Chalkduster] space-y-2 text-gray-300">
                             <li><a href="#" className="hover:text-white transition-colors">Главная</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">Наши кофейни</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">Меню</a></li>
@@ -85,8 +85,8 @@ export default function Footer() {
 
                     {/* Follow Us Section */}
                     <div>
-                        <h3 className="font-semibold mb-4 text-lg">МЫ В СОЦСЕТЯХ</h3>
-                        <ul className="space-y-2 text-gray-300">
+                        <h3 className="font-[Chalkduster] font-semibold mb-4 text-lg">МЫ В СОЦСЕТЯХ</h3>
+                        <ul className="font-[Chalkduster] space-y-2 text-gray-300">
                             <li><a href="#" className="hover:text-white transition-colors">VK</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">Telegram</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">Instagram</a></li>
@@ -95,12 +95,12 @@ export default function Footer() {
 
                     {/* Contact Us Section */}
                     <div>
-                        <h3 className="font-semibold mb-4 text-lg">КОНТАКТЫ</h3>
-                        <p className="text-gray-300 mb-2">Всегда рады помочь</p>
-                        <a href="mailto:info@odinsbrew.ru" className="text-gray-300 hover:text-white transition-colors">
+                        <h3 className="font-[Chalkduster] font-semibold mb-4 text-lg">КОНТАКТЫ</h3>
+                        <p className="font-[Chalkduster] text-gray-300 mb-2">Всегда рады помочь</p>
+                        <a href="mailto:info@odinsbrew.ru" className="font-[Chalkduster] text-gray-300 hover:text-white transition-colors">
                             info@odinsbrew.ru
                         </a>
-                        <p className="text-gray-300 mt-2">+7 (999) 123-45-67</p>
+                        <p className="font-[Chalkduster] text-gray-300 mt-2">+7 (999) 123-45-67</p>
                     </div>
                 </div>
 

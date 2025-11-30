@@ -46,3 +46,12 @@
 .font-chalkduster {
   font-family: 'Chalkduster', 'Brush Script MT', cursive, sans-serif;
 }
+.glowing {
+  box-shadow:
+    0 0 20px rgba(0, 170, 102, 0.8),
+    0 0 35px rgba(2, 142, 91, 0.6) !important;
+  border-color: #1ab880 !important;
+  transform: scale(1.025) !important;
+  z-index: 20;
+  transition: all 0.2s ease !important;
+}

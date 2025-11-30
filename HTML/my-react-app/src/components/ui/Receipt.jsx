@@ -66,13 +66,13 @@ export default function Receipt({ orderData, stickers, setStickers, isOrderFinal
       }}
     >
       {/* Заголовок */}
-      <div className="text-center mb-6">
+      <div className="font-[Chalkduster] text-center mb-6">
         <h3 className="text-2xl font-bold text-[#8B4513] mb-1 tracking-wide">Ваш заказ</h3>
         <div className="w-16 h-0.5 bg-[#8B4513] mx-auto opacity-60"></div>
       </div>
 
       {/* Информация о заказе */}
-      <div className="space-y-3 mb-6">
+      <div className="font-[Chalkduster] space-y-3 mb-6">
         <div className="flex justify-between items-center bg-white/30 rounded-lg px-3 py-2">
           <span className="text-sm font-medium text-[#5D4037]">Статус:</span>
           <span className="text-sm font-semibold text-[#8B4513] bg-amber-100 px-2 py-1 rounded-full">
@@ -86,7 +86,7 @@ export default function Receipt({ orderData, stickers, setStickers, isOrderFinal
       </div>
 
       {/* Список товаров */}
-      <div className="mb-35">
+      <div className="font-[Chalkduster] mb-35">
         <h4 className="text-lg font-bold text-[#8B4513] mb-3 text-center">Состав заказа</h4>
         <div className="flex flex-col gap-2">
           {orderData.items.map((item, index) => (
@@ -108,7 +108,7 @@ export default function Receipt({ orderData, stickers, setStickers, isOrderFinal
       </div>
 
       {/* Итоговая информация */}
-      <div className="pt-3 mb-3">
+      <div className="font-[Chalkduster] pt-3 mb-3">
         <div className="flex justify-between items-center mb-2 font-semibold">
           <span>Количество товаров:</span>
           <span className="font-bold">{orderData.totalItems} шт</span>

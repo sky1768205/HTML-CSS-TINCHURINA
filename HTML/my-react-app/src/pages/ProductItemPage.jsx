@@ -101,7 +101,7 @@ export default function ProductItemPage() {
     const quantity = cartItem?.quantity || 0;
 
     return (
-        <div className="min-h-screen relative overflow-hidden">
+        <div className="font-[Chalkduster] min-h-screen relative overflow-hidden">
             {/* Фон с параллакс эффектом */}
             <div
                 className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
@@ -144,13 +144,13 @@ export default function ProductItemPage() {
                             onClick={() => window.history.back()}
                             className="mb-8 text-white hover:text-gray-200 transition-colors flex items-center gap-2"
                         >
-                            <span className="text-xl">←</span>
+                            <span className="font-[Chalkduster] text-xl">←</span>
                             <span>Назад к каталогу</span>
                         </button>
 
                         {/* Карточка товара */}
-                        <div className="bg-[#2c463393] backdrop-blur-sm rounded-2xl border border-white/30 overflow-hidden shadow-2xl">
-                            <div className="flex flex-col lg:flex-row">
+                        <div className="font-[Chalkduster] bg-[#2c463393] backdrop-blur-sm rounded-2xl border border-white/30 overflow-hidden shadow-2xl">
+                            <div className="font-[Chalkduster] flex flex-col lg:flex-row">
                                 {/* Изображение товара */}
                                 <div className="lg:w-1/2 p-8">
                                     <div className="relative">
@@ -163,36 +163,36 @@ export default function ProductItemPage() {
                                             }}
                                         />
                                         {/* Бейдж категории */}
-                                        <div className="absolute top-4 left-4 bg-[#2C4B35]/90 text-white px-4 py-2 rounded-full text-sm font-medium">
+                                        <div className="font-[Chalkduster] absolute top-4 left-4 bg-[#2C4B35]/90 text-white px-4 py-2 rounded-full text-sm font-medium">
                                             {product.category}
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Информация о товаре */}
-                                <div className="lg:w-1/2 p-8 flex flex-col justify-between">
+                                <div className="font-[Chalkduster] lg:w-1/2 p-8 flex flex-col justify-between">
                                     <div>
                                         {/* Заголовок и цена */}
-                                        <div className="mb-6">
-                                            <h1 className="text-4xl font-light text-white mb-4">
+                                        <div className="font-[Chalkduster] mb-6">
+                                            <h1 className="font-[Chalkduster] text-4xl font-light text-white mb-4">
                                                 {product.name}
                                             </h1>
-                                            <div className="text-3xl font-light text-white">
+                                            <div className="font-[Chalkduster] text-3xl font-light text-white">
                                                 ${product.price}
                                             </div>
                                         </div>
 
                                         {/* Описание */}
-                                        <div className="mb-8">
-                                            <h3 className="text-lg font-semibold text-white mb-3">Описание</h3>
-                                            <p className="text-white leading-relaxed text-lg">
+                                        <div className="font-[Chalkduster] mb-8">
+                                            <h3 className="font-[Chalkduster] text-lg font-semibold text-white mb-3">Описание</h3>
+                                            <p className="font-[Chalkduster] text-white leading-relaxed text-lg">
                                                 {product.description}
                                             </p>
                                         </div>
 
                                         {/* Дополнительная информация */}
-                                        <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                                            <div className="grid grid-cols-2 gap-4 text-sm">
+                                        <div className="font-[Chalkduster] bg-gray-50 rounded-lg p-4 mb-6">
+                                            <div className="font-[Chalkduster] grid grid-cols-2 gap-4 text-sm">
                                                 <div>
                                                     <span className="text-gray-500">Категория:</span>
                                                     <p className="text-gray-700 font-medium">{product.category}</p>
@@ -209,7 +209,7 @@ export default function ProductItemPage() {
                                         {quantity === 0 ? (
                                             <button
                                                 onClick={handleAdd}
-                                                className="w-full bg-[#2C4B35] hover:bg-[#1E3525] text-white py-4 rounded-xl font-medium text-lg transition-all duration-300 hover:scale-105 shadow-lg"
+                                                className="font-[Chalkduster] w-full bg-[#2C4B35] hover:bg-[#1E3525] text-white py-4 rounded-xl font-medium text-lg transition-all duration-300 hover:scale-105 shadow-lg"
                                             >
                                                 ДОБАВИТЬ В КОРЗИНУ
                                             </button>

@@ -41,13 +41,13 @@ export default function MainLayout() {
                                 {/* ЛОГО */}
                                 <NavLink
                                     to="/"
-                                    className="mr-8 text-2xl font-bold text-[#F8F8F9] font-serif hover:text-[#2C4B35] transition-colors duration-300"
+                                    className="font-[Chalkduster] mr-8 text-2xl font-bold text-[#F8F8F9] font-serif hover:text-[#2C4B35] transition-colors duration-300" style={{ fontFamily: "'Chalkduster', cursive" }}
                                 >
                                     ODIN'S BREW
                                 </NavLink>
 
                                 {/* МЕНЮ */}
-                                <div className="flex items-center gap-x-6 mx-auto">
+                                <div className="font-[Chalkduster] flex items-center gap-x-6 mx-auto">
                                     {[
                                         { to: "/", name: "Домой", rune: "ᚺ" },
                                         { to: "/blog", name: "Легенды", rune: "ᛊ" },

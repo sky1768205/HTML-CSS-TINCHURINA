@@ -75,7 +75,7 @@ export default function CoffeUpdates() {
             <style>{styles}</style>
 
             {showAlert && (
-                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[9999] animate-fade-in">
+                <div className="font-[Chalkduster] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[9999] animate-fade-in">
                     <div className="relative">
                         {/* Анимированный ворон */}
                         <div className="absolute -left-20 top-1/2 transform -translate-y-1/2">
@@ -96,11 +96,11 @@ export default function CoffeUpdates() {
                         </div>
 
                         {/* Скандинавский стиль алерт */}
-                        <div className="bg-[#2C4B35] rounded-lg px-8 py-6 shadow-lg max-w-sm ml-10 border border-[#3A5C40]">
+                        <div className=" font-[Chalkduster] bg-[#2C4B35] rounded-lg px-8 py-6 shadow-lg max-w-sm ml-10 border border-[#3A5C40]">
                             <div className="text-center">
                                 <div className="text-white">
                                     <div className="text-lg font-medium mb-3 tracking-wide">SKÁL!</div>
-                                    <div className="text-base text-gray-200">
+                                    <div className="font-[Chalkduster] text-base text-gray-200">
                                         Вы подписались на рассылку
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@ export default function CoffeUpdates() {
 
                             <button
                                 onClick={() => setShowAlert(false)}
-                                className="absolute -top-2 -right-2 w-6 h-6 bg-[#3A5C40] text-white rounded-full flex items-center justify-center text-xs hover:bg-[#4A6C50] transition-colors duration-200"
+                                className="font-[Chalkduster] absolute -top-2 -right-2 w-6 h-6 bg-[#3A5C40] text-white rounded-full flex items-center justify-center text-xs hover:bg-[#4A6C50] transition-colors duration-200"
                             >
                                 ✕
                             </button>
@@ -121,22 +121,22 @@ export default function CoffeUpdates() {
             )}
 
             {/* Основная форма в скандинавском стиле */}
-            <div className="py-16 px-4 w-full bg-[#2c4b3543] border border-gray-300 rounded-lg shadow-sm">
-                <div className="max-w-3xl mx-auto">
+            <div className="font-[Chalkduster] py-16 px-4 w-full bg-[#2c4b3543] border border-gray-300 rounded-lg shadow-sm">
+                <div className="font-[Chalkduster] max-w-3xl mx-auto">
                     <div className="text-center mb-10">
-                        <div className="text-sm font-medium text-white mb-3 tracking-wide">
+                        <div className="font-[Chalkduster] text-sm font-medium text-white mb-3 tracking-wide">
                             KAFE NYHETER
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
+                        <h2 className="font-[Chalkduster] text-3xl md:text-4xl font-light text-white mb-4">
                             Кофейные обновления
                         </h2>
-                        <p className="text-white max-w-md mx-auto">
+                        <p className="font-[Chalkduster] text-white max-w-md mx-auto">
                             Узнавайте первыми о новых сортах и специальных предложениях
                         </p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center justify-center gap-3 max-w-xl mx-auto">
-                        <div className="relative w-full md:flex-1">
+                        <div className="font-[Chalkduster] relative w-full md:flex-1">
                             <input
                                 type="email"
                                 value={email}
@@ -149,9 +149,9 @@ export default function CoffeUpdates() {
                         <button
                             type="submit"
                             disabled={isSubmitting || !email}
-                            className="w-full md:w-auto bg-[#2C4B35] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#3A5C40] transition-colors duration-200 border border-[#2C4B35] disabled:opacity-40 disabled:cursor-not-allowed text-base whitespace-nowrap min-w-[160px] relative"
+                            className="font-[Chalkduster] w-full md:w-auto bg-[#2C4B35] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#3A5C40] transition-colors duration-200 border border-[#2C4B35] disabled:opacity-40 disabled:cursor-not-allowed text-base whitespace-nowrap min-w-[160px] relative"
                         >
-                            <span className={`${isSubmitting ? 'opacity-0' : 'opacity-100'}`}>
+                            <span className={`${isSubmitting ? 'opacity-0' : 'opacity-100'}`} style={{ fontFamily: "'Chalkduster', cursive" }}>
                                 ПОДПИСАТЬСЯ
                             </span>
                             {isSubmitting && (

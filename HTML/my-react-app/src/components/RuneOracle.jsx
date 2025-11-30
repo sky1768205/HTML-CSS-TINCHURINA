@@ -33,8 +33,8 @@ const RuneOracle = () => {
                 onClick={castPrediction}
                 className="bg-[#2C4B35] text-[#F8F8F9] p-4 rounded-full shadow-lg hover:shadow-[#2C4B35]/25 hover:scale-110 transition-all duration-300 border border-[#F8F8F9]/20 group"
             >
-                <span className="flex items-center gap-2 text-sm font-bold">
-                    <span className="group-hover:rotate-180 transition-transform duration-500">ᛜ</span>
+                <span className="font-[Chalkduster] flex items-center gap-2 text-sm font-bold">
+                    <span className=" font-[Chalkduster] group-hover:rotate-180 transition-transform duration-500" style={{ fontFamily: "'Chalkduster', cursive" }}>ᛜ</span>
                     Руническое Гадание
                 </span>
             </button>

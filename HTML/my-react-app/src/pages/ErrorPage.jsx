@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 
 export default function ErrorPage() {
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 py-8">
+    <div className=" font-[Chalkduster] min-h-screen bg-black flex flex-col items-center justify-center px-4 py-8">
       <div className="mb-6">
        <img src="/images/камни.png" alt="Лес" />
       </div>
