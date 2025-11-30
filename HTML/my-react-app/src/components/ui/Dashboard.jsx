@@ -14,16 +14,16 @@ export default function Dashboard() {
   const [dateRange, setDateRange] = useState({ start: null, end: null });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setLoading(true); // включаем загрузку до запроса
+   useEffect(() => {
+    setLoading(true);
     axios
       .get("http://localhost:3000/api/sales")
       .then((res) => setSales(res.data.data))
       .catch((err) => console.error("Ошибка при получении продаж:", err))
-      .finally(() => setLoading(false)); // выключаем загрузку
+      .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <LoadingPage />; 
+
 
   useEffect(() => {
     let result = [...sales];
@@ -42,61 +42,58 @@ export default function Dashboard() {
     setFilteredSales(result);
   }, [sales, selectedShop, dateRange]);
 
-  return (
-    <div className={styles.dashboard}>
-      {/* Фоновое изображение */}
-      <div className={styles.backgroundImage}>
-        <img src="/images/registration.jpg" alt="Лес Магии" />
-      </div>
-
-      <div className={styles.overlay}></div>
-
-      {/* Декоративные элементы */}
-      <div className={styles.particle1}></div>
-      <div className={styles.particle2}></div>
-      <div className={styles.particle3}></div>
-      <div className={styles.runeTopLeft}>ᛋ</div>
-      <div className={styles.runeBottomRight}>ᚦ</div>
-
-      {/* Основной контент */}
-      <main className={styles.content}>
-        <div className={styles.header}>
-          <h1>Дашборд Продаж</h1>
-          <p className={styles.subtitle}>
-            Магические записи о потоках золота и серебра
-          </p>
+   return (
+    <>
+      {loading ? (
+        <div className={styles.fullPageLoading}>
+          <LoadingPage />
         </div>
-
-        {loading ? (
-          <div className={styles.loading}>
-            <div className={styles.spinner}></div>
-            <p>Собираем руны продаж...</p>
+      ) : (
+        <div className={styles.dashboard}>
+          <div className={styles.backgroundImage}>
+            <img src="/images/registration.jpg" alt="Лес Магии" />
           </div>
-        ) : (
-          <div className={styles.sections}>
-            <section className={styles.filtersSection}>
-              <h2>🧭 Фильтры</h2>
-              <Filters
-                sales={sales}
-                selectedShop={selectedShop}
-                setSelectedShop={setSelectedShop}
-                dateRange={dateRange}
-                setDateRange={setDateRange}
-              />
-            </section>
 
-            <section className={styles.tableSection}>
-              <h2>📜 Сводная таблица</h2>
-              <SalesTable sales={filteredSales} />
-            </section>
+          <div className={styles.overlay}></div>
+          <div className={styles.particle1}></div>
+          <div className={styles.particle2}></div>
+          <div className={styles.particle3}></div>
+          <div className={styles.runeTopLeft}>ᛋ</div>
+          <div className={styles.runeBottomRight}>ᚦ</div>
 
-            <section className={styles.chartSection}>
-              <h2>📈 График продаж</h2>
-              <SalesChart sales={filteredSales} />
-            </section>
-          </div>
-        )}
-      </main>
-    </div>
+          <main className={styles.content}>
+            <div className={styles.header}>
+              <h1>Дашборд Продаж</h1>
+              <p className={styles.subtitle}>
+                Магические записи о потоках золота и серебра
+              </p>
+            </div>
+
+            <div className={styles.sections}>
+              <section className={styles.filtersSection}>
+                <h2>🧭 Фильтры</h2>
+                <Filters
+                  sales={sales}
+                  selectedShop={selectedShop}
+                  setSelectedShop={setSelectedShop}
+                  dateRange={dateRange}
+                  setDateRange={setDateRange}
+                />
+              </section>
+
+              <section className={styles.tableSection}>
+                <h2>📜 Сводная таблица</h2>
+                <SalesTable sales={filteredSales} />
+              </section>
+
+              <section className={styles.chartSection}>
+                <h2>📈 График продаж</h2>
+                <SalesChart sales={filteredSales} />
+              </section>
+            </div>
+          </main>
+        </div>
+      )}
+    </>
   );
 }
