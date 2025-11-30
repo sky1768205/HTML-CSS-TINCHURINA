@@ -2,7 +2,7 @@ export default function LoadingPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
       <div className="text-center">
-        <div className="mb-4 animate-spin">
+        <div className="mb-4 animate-[spin_9s_linear_infinite]">
           <img src="/images/LoadingImg.png" alt="loading" className="w-full" />
         </div>
       </div>
