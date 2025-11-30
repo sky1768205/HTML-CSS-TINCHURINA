@@ -6,7 +6,17 @@ import CoffeeShopMap from '../components/CoffeShopMap';
 
 export default function HomePage() {
     const [scrollY, setScrollY] = useState(0);
+    const [animate, setAnimate] = useState(false);
 
+    const playAnimation = () => {
+    const audio = new Audio('/sounds/click.mp3'); // твой звук
+    audio.play();
+
+    setAnimate(true);
+    setTimeout(() => {
+        setAnimate(false); 
+    }, 12000); // длительность твоей анимации
+    };
 
 
     useEffect(() => {
@@ -20,24 +30,31 @@ export default function HomePage() {
 
     return (
         <div className="min-h-screen relative">
-              <style>
-    {`
-      @keyframes pulseSaturation {
-        0% { filter: saturate(0%); }
-        100% { filter: saturate(180%); }
-      }
-    `}
-  </style>
-    <div
-    style={{
-      backgroundImage: 'url(/images/Homeback.jpg)',
-      animation: 'pulseSaturation 1.5s ease-in-out infinite alternate',
-      filter: 'saturate(100%)'
-    }}
-    className="fixed inset-0 bg-cover bg-center bg-no-repeat z-0"
-  >
-    <div className="absolute inset-0 bg-[#171717]/60"></div>
-  </div>
+            <style>
+            {`
+            @keyframes pulseSaturation {
+                0%   { filter: saturate(150%); }
+                10%  { filter: saturate(20%); }      /* резкое падение */
+                25%  { filter: saturate(250%); }    /* вспышка */
+                30%  { filter: saturate(180%); }
+                40%  { filter: saturate(40%); }      /* резкое падение */
+                55%  { filter: saturate(250%); }    /* вспышка */
+                60%  { filter: saturate(100%); }    /* почти норма */
+                75%  { filter: saturate(180%); }    /* вторая вспышка */
+                100% { filter: saturate(250%); }    /* возвращение */
+            }
+            `}
+            </style>
+            <div
+                style={{
+                    backgroundImage: 'url(/images/HomeBG.png)',
+                    animation: animate ? 'pulseSaturation 12s ease-in-out forwards' : 'none',
+                    filter: 'saturate(250%)'
+                }}
+                className="fixed inset-0 bg-cover bg-center bg-no-repeat z-0"
+                >
+            <div className="absolute inset-0 bg-[#171717]/60"></div>
+            </div>
 
 
             {/* Прогресс бар */}
@@ -54,6 +71,13 @@ export default function HomePage() {
                         <h2 className="text-7xl font-light text-[#F8F8F9] mb-8 text-center font-serif tracking-tighter">
                             ODIN'S BREW
                         </h2>
+                        <button
+                            onClick={playAnimation}
+                            className="fixed bottom-25 right-7.5 bg-[#2C4B35] text-white px-7 py-3 rounded-full shadow-xl hover:scale-105 transition"
+                            >
+                            Запустить эффект
+                        </button>
+
                         <p className="text-xl text-[#F8F8F9] mb-12 text-center leading-relaxed max-w-2xl mx-auto opacity-90">
                             Скандинавский кофе, вдохновленный суровой красотой северных земель.
                             Откройте для себя вкус, достойный воинов и мореплавателей.

@@ -159,7 +159,7 @@ export default function SalesTable({ sales }) {
                   fontWeight: '600',
                 }}
               >
-                {sale.total_price} ₽
+                {sale.total_price} $
               </td>
               <td
                 className="py-2 px-4"

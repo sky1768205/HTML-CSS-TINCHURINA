@@ -45,7 +45,7 @@ export default function StickerPanel({ stickers, setStickers, isOrderFinalized, 
       </div>
       {!isOrderFinalized && (
         <p className="text-white/70 text-sm text-center">
-          Перетащите стикеры на чек для украшения
+          Нажмите на стикеры для украшения
         </p>
       )}
     </div>

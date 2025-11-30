@@ -99,8 +99,8 @@ export default function Receipt({ orderData, stickers, setStickers, isOrderFinal
                 <div className="text-xs text-[#795548]">Магазин: {item.shop}</div>
               </div>
               <div className="text-right">
-                <div className="font-semibold text-[#8B4513]">{item.price * item.quantity} ₽</div>
-                <div className="text-xs text-[#795548]">{item.quantity} шт × {item.price} ₽</div>
+                <div className="font-semibold text-[#8B4513]">{item.price * item.quantity} $</div>
+                <div className="text-xs text-[#795548]">{item.quantity} шт × {item.price} $</div>
               </div>
             </div>
           ))}
@@ -115,7 +115,7 @@ export default function Receipt({ orderData, stickers, setStickers, isOrderFinal
         </div>
         <div className="flex justify-between items-center font-bold text-lg">
           <span>Общая сумма:</span>
-          <span>{orderData.totalPrice} ₽</span>
+          <span>{orderData.totalPrice} $</span>
         </div>
       </div>
 
