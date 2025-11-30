@@ -7,6 +7,7 @@ export default function BlogItemPage() {
     const { id } = useParams()
     const [post, setPost] = useState(null)
     const [scrollProgress, setScrollProgress] = useState(0)
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const handleScroll = () => {
