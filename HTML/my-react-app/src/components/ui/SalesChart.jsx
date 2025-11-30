@@ -1,4 +1,3 @@
-// SalesChart.jsx
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function SalesChart({ sales }) {

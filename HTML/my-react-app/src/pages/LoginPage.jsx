@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../stores/stores";
+import { useNavigate } from "react-router";  // ← добавили
 import styles from "./RegisterPages.module.css";
 
 export default function LoginPage() {
@@ -7,6 +8,8 @@ export default function LoginPage() {
     const [message, setMessage] = useState("");
 
     const [user, setUser] = useContext(AuthContext);
+
+    const navigate = useNavigate(); // ← инициализируем
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -26,33 +29,32 @@ export default function LoginPage() {
         if (data.success) {
             setMessage("Вход успешный!");
 
-            // Сохраняем в localStorage
+            // Сохраняем пользователя
             localStorage.setItem("user", JSON.stringify(data.data));
 
-            // Обновляем контекст → сразу обновится AuthStatus
+            // Обновляем контекст
             setUser(data.data);
+
+            // 🔥 Возвращаем на главную
+            setTimeout(() => {
+                navigate("/");
+            }, 300); // небольшая задержка чтобы показать сообщение
         } else {
             setMessage(data.error);
         }
     }
 
     return (
-         <div className="about-page">
-      {/* Фоновое изображение с параллаксом */}
-      <div
-        className="background-image"
-        style={{
-          
-        }}
-      >
-        <img src="/images/registration.jpg" alt="Лес" />
-      </div>
+        <div className="about-page">
+            <div className="background-image">
+                <img src="/images/registration.jpg" alt="Лес" />
+            </div>
 
-            {/* Основной контейнер формы */}
             <div className={styles.formContainer}>
                 <div className={styles.formCard}>
                     <div className={styles.header}>
-                        <h2>Добро пожаловать</h2> <h2>в Лес Магии</h2>
+                        <h2>Добро пожаловать</h2>
+                        <h2>в Лес Магии</h2>
                         <div className={styles.divider}></div>
                     </div>
 
@@ -85,7 +87,11 @@ export default function LoginPage() {
                     </form>
 
                     {message && (
-                        <div className={`${styles.message} ${message.includes('успешный') ? styles.success : styles.error}`}>
+                        <div
+                            className={`${styles.message} ${
+                                message.includes("успешный") ? styles.success : styles.error
+                            }`}
+                        >
                             {message}
                         </div>
                     )}
@@ -96,7 +102,6 @@ export default function LoginPage() {
                 </div>
             </div>
 
-            {/* Декоративные элементы */}
             <div className={styles.particle1}></div>
             <div className={styles.particle2}></div>
             <div className={styles.particle3}></div>

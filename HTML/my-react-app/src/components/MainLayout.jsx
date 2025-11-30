@@ -4,40 +4,41 @@ import { useState, useEffect } from "react";
 import Footer from "./Footer";
 import RuneOracle from "../components/RuneOracle";
 import AuthStatus from "./ui/AuthStatus";
-// import RavenIndicator from "./Button_raven";
 
 export default function MainLayout() {
     const [cart, setCart] = useState([]);
+
     const [user, setUser] = useState(() => {
-        // При загрузке страницы подтянем пользователя из localStorage
         const saved = localStorage.getItem("user");
         return saved ? JSON.parse(saved) : null;
     });
+
     const [isScrolled, setIsScrolled] = useState(false);
     const [runeHover, setRuneHover] = useState(null);
+    const totalQuantity = cart.reduce((sum, item) => sum + (item.quantity), 0)
 
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
         };
 
-        window.addEventListener('scroll', handleScroll);
-
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     return (
-        <AuthContext value={[user, setUser]}>
-            <CartContext value={[cart, setCart]}>
+        <AuthContext.Provider value={[user, setUser]}>
+            <CartContext.Provider value={[cart, setCart]}>
                 <div className="min-h-screen bg-[#171717] relative overflow-hidden">
-
-
-                    <header className={`fixed w-full z-50 transition-all duration-500 ${isScrolled
-                        ? 'bg-[#171717]/40 backdrop-blur-md border-b border-[#2C4B35]/20 py-3'
-                        : 'bg-transparent py-6'
-                        }`}>
+                    <header className={`fixed w-full z-50 transition-all duration-500 ${
+                        isScrolled
+                            ? "bg-[#171717]/40 backdrop-blur-md border-b border-[#2C4B35]/20 py-3"
+                            : "bg-transparent py-6"
+                    }`}>
                         <div className="container mx-auto px-6">
                             <div className="flex items-center">
+                                
+                                {/* ЛОГО */}
                                 <NavLink
                                     to="/"
                                     className="mr-8 text-2xl font-bold text-[#F8F8F9] font-serif hover:text-[#2C4B35] transition-colors duration-300"
@@ -45,20 +46,29 @@ export default function MainLayout() {
                                     ODIN'S BREW
                                 </NavLink>
 
-                                <div className="flex text-white items-center gap-x-8 mx-auto">
+                                {/* МЕНЮ */}
+                                <div className="flex items-center gap-x-6 mx-auto">
                                     {[
                                         { to: "/", name: "Домой", rune: "ᚺ" },
                                         { to: "/blog", name: "Легенды", rune: "ᛊ" },
                                         { to: "/about", name: "Сага о нас", rune: "ᚱ" },
                                         { to: "/products", name: "Эликсиры", rune: "ᛗ" },
-                                        { to: "/login", name: "Вход", rune: "ᛗ" },
-                                        { to: "/register", name: "Регистрацияы", rune: "ᛗ" },
+                                        // Показывать ссылки вход/регистрация ТОЛЬКО когда user === null
+                                        ...(!user
+                                            ? [
+                                                { to: "/login", name: "Вход", rune: "ᛗ" },
+                                                { to: "/register", name: "Регистрация", rune: "ᛗ" },
+                                            ]
+                                            : [])
                                     ].map((item, index) => (
                                         <NavLink
                                             key={item.to}
                                             to={item.to}
                                             className={({ isActive }) =>
-                                                `group relative text-[#F8F8F9] hover:text-[#2C4B35] transition-all duration-300 font-medium px-4 py-2 rounded-lg ${isActive ? 'bg-[#2C4B35]/30 text-[#2C4B35] border border-[#2C4B35]/50' : 'hover:bg-[#2C4B35]/20'
+                                                `group relative text-[#F8F8F9] hover:text-[#2C4B35] transition-all duration-300 font-medium px-4 py-2 rounded-lg text-nowrap ${
+                                                    isActive
+                                                        ? "bg-[#2C4B35]/30 text-[#2C4B35] border border-[#2C4B35]/50"
+                                                        : "hover:bg-[#2C4B35]/20"
                                                 }`
                                             }
                                             onMouseEnter={() => setRuneHover(index)}
@@ -70,44 +80,34 @@ export default function MainLayout() {
                                                 </span>
                                                 {item.name}
                                             </span>
-
-                                            {runeHover === index && (
-                                                <div className="absolute inset-0 border border-[#2C4B35]/50 rounded-lg animate-pulse"></div>
-                                            )}
                                         </NavLink>
                                     ))}
                                 </div>
 
+                                {/* Кнопки справа */}
                                 <div className="flex items-center gap-x-6">
-                                    {/* <RavenIndicator /> */}
-
                                     <NavLink to="/account" className="relative group">
-                                        <div className=" rounded-lg bg-[#2C4B35]/20 hover:bg-[#2C4B35]/30 transition-all duration-300 border border-[#2C4B35]/50 hover:border-[#F8F8F9]/50">
-
+                                        <div className="rounded-lg bg-[#2C4B35]/20 hover:bg-[#2C4B35]/30 transition-all border border-[#2C4B35]/50 hover:border-[#F8F8F9]/50">
                                             <img className="w-12 h-12" src="/images/Frame 2 (1).png" alt="" />
-
                                         </div>
                                     </NavLink>
 
                                     <NavLink to="/cart" className="relative group">
-                                        <div className="rounded-lg bg-[#2C4B35]/20 hover:bg-[#2C4B35]/30 transition-all duration-300 border border-[#2C4B35]/50 hover:border-[#F8F8F9]/50">
-
+                                        <div className="rounded-lg bg-[#2C4B35]/20 hover:bg-[#2C4B35]/30 transition-all border border-[#2C4B35]/50 hover:border-[#F8F8F9]/50">
                                             <img className="w-12 h-12" src="images/Frame 7 (1).png" alt="" />
-
                                             <div className="absolute -top-1 -right-1 text-[10px] w-5 h-5 flex justify-center items-center bg-[#2C4B35] text-[#F8F8F9] rounded-full font-bold border border-[#F8F8F9]/50 shadow-lg">
-                                                {cart.length}
+                                                {totalQuantity}
                                             </div>
                                         </div>
                                     </NavLink>
+
                                     <AuthStatus />
                                 </div>
                             </div>
                         </div>
                     </header>
 
-                    {/* Отступ для фиксированного хедера */}
                     <div className="h-24"></div>
-
                     <main className="relative z-10">
                         <Outlet />
                     </main>
@@ -116,11 +116,9 @@ export default function MainLayout() {
                         <Footer />
                     </footer>
 
-                    {/* Компонент рунического гадания */}
                     <RuneOracle />
                 </div>
-            </CartContext>
-        </AuthContext>
-
-    )
+            </CartContext.Provider>
+        </AuthContext.Provider>
+    );
 }
