@@ -79,6 +79,14 @@ class Database {
                     FOREIGN KEY(product_id) REFERENCES products(id),
                     FOREIGN KEY(shop_id) REFERENCES shops(id)
                 );
+                CREATE TABLE IF NOT EXISTS blog_posts (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    title TEXT,
+                    excerpt TEXT,
+                    date TEXT,
+                    image_url TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
             `;
 
             this.db.exec(createTablesQuery, (err) => {
