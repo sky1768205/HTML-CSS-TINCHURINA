@@ -20,15 +20,25 @@ export default function HomePage() {
 
     return (
         <div className="min-h-screen relative">
+              <style>
+    {`
+      @keyframes pulseSaturation {
+        0% { filter: saturate(0%); }
+        100% { filter: saturate(180%); }
+      }
+    `}
+  </style>
+    <div
+    style={{
+      backgroundImage: 'url(/images/Homeback.jpg)',
+      animation: 'pulseSaturation 1.5s ease-in-out infinite alternate',
+      filter: 'saturate(100%)'
+    }}
+    className="fixed inset-0 bg-cover bg-center bg-no-repeat z-0"
+  >
+    <div className="absolute inset-0 bg-[#171717]/60"></div>
+  </div>
 
-            <div
-                className="fixed inset-0 bg-cover bg-center bg-no-repeat z-0"
-                style={{
-                    backgroundImage: 'url(/images/Homeback.jpg)'
-                }}
-            >
-                <div className="absolute inset-0 bg-[#171717]/70"></div>
-            </div>
 
             {/* Прогресс бар */}
             <div className="fixed top-0 left-0 w-full h-1 bg-[#171717]/30 z-50">
