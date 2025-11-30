@@ -69,7 +69,7 @@ export default function ProductItemPage() {
         }
     }, [id])
 
-    if (loading) {
+    if (loading || !product) {
         return (
             <LoadingPage />
         );
