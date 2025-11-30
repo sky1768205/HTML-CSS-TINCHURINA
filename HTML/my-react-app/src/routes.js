@@ -10,6 +10,8 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPages from "./pages/RegisterPage.jsx";
 import Account from "./pages/Account.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
+import BlogPage from "./pages/BlogPage.jsx";
+import BlogItemPage from "./pages/BlogItemPage.jsx";
 
 
 
@@ -51,6 +53,14 @@ export const router = createBrowserRouter([
             {
                 path: '/account',
                 Component: Account
+            },
+            {
+                path: '/blog',
+                Component: BlogPage
+            },
+            {
+                path: '/blog/:id',
+                Component: BlogItemPage
             },
             {
                 path:'*',

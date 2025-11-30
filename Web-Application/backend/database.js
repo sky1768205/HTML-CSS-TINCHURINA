@@ -508,6 +508,41 @@ class Database {
         });
     }
 
+        // Получить все посты
+    getAllBlogPosts() {
+        return new Promise((resolve, reject) => {
+            const query = `SELECT * FROM blog_posts ORDER BY created_at DESC`;
+            this.db.all(query, [], (err, rows) => {
+                if (err) reject(err);
+                else resolve(rows);
+            });
+        });
+    }
+
+    // Получить пост по ID
+    getBlogPostById(id) {
+        return new Promise((resolve, reject) => {
+            const query = `SELECT * FROM blog_posts WHERE id = ?`;
+            this.db.get(query, [id], (err, row) => {
+                if (err) reject(err);
+                else if (row) resolve(row);
+                else reject(new Error('Пост не найден'));
+            });
+        });
+    }
+
+    // Создать новый пост
+    createBlogPost(postData) {
+        return new Promise((resolve, reject) => {
+            const { title, excerpt, date, image_url } = postData;
+            const query = `INSERT INTO blog_posts (title, excerpt, date, image_url) VALUES (?, ?, ?, ?)`;
+            this.db.run(query, [title, excerpt, date, image_url], function(err) {
+                if (err) reject(err);
+                else resolve({ id: this.lastID, title, excerpt, date, image_url });
+            });
+        });
+    }
+
 
 
     // Метод для закрытия соединения

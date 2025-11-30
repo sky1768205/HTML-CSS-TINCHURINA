@@ -258,6 +258,41 @@ app.get('/api/sales', async (req, res) => {
     }
 });
 
+// GET all blog posts
+app.get('/api/blog', async (req, res) => {
+    try {
+        const posts = await db.getAllBlogPosts();
+        res.json({ success: true, data: posts });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+// GET blog post by ID
+app.get('/api/blog/:id', async (req, res) => {
+    try {
+        const post = await db.getBlogPostById(req.params.id)
+        res.json({ success: true, data: post })
+    } catch (err) {
+        if (err.message === 'Пост не найден') {
+            res.status(404).json({ success: false, error: 'Post not found' })
+        } else {
+            res.status(500).json({ success: false, error: err.message })
+        }
+    }
+})
+
+// CREATE new blog post
+app.post('/api/blog', async (req, res) => {
+    const { title, excerpt, date, image_url } = req.body
+    try {
+        const newPost = await db.createBlogPost({ title, excerpt, date, image_url })
+        res.json({ success: true, data: newPost })
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message })
+    }
+})
+
 // Корневой маршрут
 app.get('/', (req, res) => {
     res.json({
@@ -285,6 +320,11 @@ app.get('/', (req, res) => {
             sales: {
                 create: 'POST /api/sales', // Добавление продажи
                 stats: 'GET /api/sales/stats?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD' // Статистика продаж
+            },
+            blog_posts: {
+                getAll: 'GET /api/blog',      // <-- совпадает с реальным маршрутом
+                getById: 'GET /api/blog/:id', // <-- совпадает с реальным маршрутом
+                create: 'POST /api/blog'      // <-- совпадает с реальным маршрутом
             }
         }
     });
