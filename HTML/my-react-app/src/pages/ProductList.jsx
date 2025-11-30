@@ -1,13 +1,14 @@
 import { useEffect, useState, useContext } from "react"
 import { NavLink, useParams } from "react-router"
 import { CartContext } from "../stores/stores"
+import LoadingPage from "./loadingPage"
 
 export default function CategoryPage() {
     const { id } = useParams()
     const [category, setCategory] = useState()
     const [products, setProducts] = useState([])
     const [scrollProgress, setScrollProgress] = useState(0)
-
+    const [loading, setLoading] = useState(false);
     const [cart, setCart] = useContext(CartContext)
 
     useEffect(() => {
@@ -29,6 +30,7 @@ export default function CategoryPage() {
 
     useEffect(() => {
         async function getProducts() {
+            setLoading(true); // включаем загрузку
             const resp = await fetch('http://localhost:3000/api/products')
             const data = await resp.json()
 
@@ -42,9 +44,16 @@ export default function CategoryPage() {
                     setCategory({ title: 'Все продукты' })
                 }
             }
+            setLoading(false);
         }
         getProducts()
     }, [id])
+
+    if (loading) {
+        return (
+            <LoadingPage />
+        );
+    }
 
     function renderButton(product) {
         const cartItem = cart.find(element => element.id === product.id)

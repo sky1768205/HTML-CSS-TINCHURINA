@@ -23,7 +23,8 @@ module.exports = {
                     to: {
                         width: '0%'
                     }
-                }
+                },
+                
             }
         }
     }

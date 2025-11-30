@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { motion } from "framer-motion"
+import LoadingPage from "./loadingPage"
 
 export default function BlogItemPage() {
     const { id } = useParams()
@@ -21,12 +22,14 @@ export default function BlogItemPage() {
     useEffect(() => {
         async function getPost() {
             try {
+                setLoading(true); // включаем загрузку
                 const resp = await fetch(`http://localhost:3000/api/blog/${id}`)
                 const data = await resp.json()
 
                 if (data.success && data.data) {
                     setPost(data.data)
                 }
+                setLoading(false);
             } catch (error) {
                 console.error('Error loading post:', error)
             }
@@ -35,23 +38,10 @@ export default function BlogItemPage() {
         if (id) getPost()
     }, [id])
 
-    if (!post) {
+    if (loading) {
         return (
-            <div className="min-h-screen relative overflow-hidden">
-                <div
-                    className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
-                    style={{
-                        backgroundImage: 'url(/images/фон-катлог.jpg)',
-                        transform: `translateY(${scrollProgress * 50}px)`,
-                    }}
-                />
-                <div className="min-h-screen bg-black/40 backdrop-blur-sm relative z-10 flex items-center justify-center">
-                    <div className="text-center text-white">
-                        <h1 className="text-2xl">Загрузка поста...</h1>
-                    </div>
-                </div>
-            </div>
-        )
+            <LoadingPage />
+        );
     }
 
     return (

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { NavLink } from "react-router"
+import LoadingPage from "./loadingPage"
 
 export default function BlogPage() {
 
     const [posts, setPosts] = useState([])
     const [scrollProgress, setScrollProgress] = useState(0)
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -19,36 +21,28 @@ export default function BlogPage() {
 
     useEffect(() => {
         async function getPosts() {
-            const resp = await fetch("http://localhost:3000/api/blog")
-            const data = await resp.json()
+        setLoading(true); // включаем загрузку
 
-            if (data.success) {
-                setPosts(data.data || [])
-            }
+        const resp = await fetch("http://localhost:3000/api/blog");
+        const data = await resp.json();
+
+        if (data.success) {
+            setPosts(data.data || []);
         }
-        getPosts()
-    }, [])
 
-    if (posts.length === 0) {
+        setLoading(false); // выключаем загрузку
+        }
+
+        getPosts();
+    }, []);
+
+    if (loading) {
         return (
-            <div className="min-h-screen relative overflow-hidden">
-                <div
-                    className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
-                    style={{
-                        backgroundImage: 'url(/images/фон-катлог.jpg)',
-                        transform: `translateY(${scrollProgress * 40}px)`
-                    }}
-                />
-
-                <div className="min-h-screen bg-black/40 backdrop-blur-sm relative z-10 flex items-center justify-center">
-                    <div className="text-center">
-                        <h1 className="text-4xl font-light text-white mb-4">Посты пока отсутствуют</h1>
-                        <p className="text-white/80">Добавьте записи в блог через вашу админку.</p>
-                    </div>
-                </div>
-            </div>
-        )
+            <LoadingPage />
+        );
     }
+    
+
 
     return (
         <div className="min-h-screen relative overflow-hidden">

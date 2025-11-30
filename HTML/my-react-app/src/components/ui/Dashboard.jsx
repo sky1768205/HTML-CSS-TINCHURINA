@@ -5,6 +5,7 @@ import SalesTable from "./SalesTable";
 import SalesChart from "./SalesChart";
 import Filters from "./Filters";
 import styles from "./Dashboard.module.css";
+import LoadingPage from "../../pages/loadingPage";
 
 export default function Dashboard() {
   const [sales, setSales] = useState([]);
@@ -14,12 +15,15 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true); // включаем загрузку до запроса
     axios
       .get("http://localhost:3000/api/sales")
       .then((res) => setSales(res.data.data))
       .catch((err) => console.error("Ошибка при получении продаж:", err))
-      .finally(() => setLoading(false));
+      .finally(() => setLoading(false)); // выключаем загрузку
   }, []);
+
+  if (loading) return <LoadingPage />; 
 
   useEffect(() => {
     let result = [...sales];

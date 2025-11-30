@@ -2,12 +2,14 @@ import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { CartContext } from "../stores/stores";
 import { motion } from "framer-motion";
+import LoadingPage from "./loadingPage";
 
 export default function ProductItemPage() {
     const { id } = useParams()
     const [product, setProduct] = useState(null)
     const [cart, setCart] = useContext(CartContext);
     const [scrollProgress, setScrollProgress] = useState(0)
+    const [loading, setLoading] = useState(false);
 
     function addToCart(e) {
         e.preventDefault();
@@ -38,6 +40,7 @@ export default function ProductItemPage() {
     useEffect(() => {
         async function getProduct() {
             try {
+                setLoading(true); // включаем загрузку
                 const resp = await fetch(`http://localhost:3000/api/products/${id}`)
                 const data = await resp.json()
 
@@ -48,6 +51,7 @@ export default function ProductItemPage() {
                 } else {
                     setProduct(data)
                 }
+                setLoading(false);
             } catch (error) {
                 console.error('Error loading product:', error)
 
@@ -65,25 +69,12 @@ export default function ProductItemPage() {
         }
     }, [id])
 
-    if (!product) {
+    if (loading) {
         return (
-            <div className="min-h-screen relative overflow-hidden">
-                <div
-                    className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
-                    style={{
-                        backgroundImage: 'url(/images/фон-катлог.jpg)',
-                        transform: `translateY(${scrollProgress * 50}px)`,
-                    }}
-                />
-                <div className="min-h-screen bg-black/40 backdrop-blur-sm relative z-10 flex items-center justify-center">
-                    <div className="text-center text-white">
-                        <div className="text-6xl mb-4">☕</div>
-                        <h1 className="text-2xl">Загрузка...</h1>
-                    </div>
-                </div>
-            </div>
-        )
+            <LoadingPage />
+        );
     }
+
 
     return (
         <div className="min-h-screen relative overflow-hidden">
