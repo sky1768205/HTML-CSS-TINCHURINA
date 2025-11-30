@@ -7,7 +7,7 @@ import Firefly from '../components/Firefly';
 import './AboutPage.css';
 import CursorFireflies from '../components/CursorFireflies';
 import HomeButton from '../components/HomeButton';
-
+import AnimalCircle from '../components/AnimalCircle';
 const AboutPage = () => {
   const controls = useAnimation();
   const [ref, inView] = useInView({
@@ -193,6 +193,25 @@ const AboutPage = () => {
         </div>
         {/* Светлячки, следующие за курсором */}
 <CursorFireflies />
+
+        <div className="animal-circles-wrapper">
+
+  <AnimalCircle
+    imageSrc="/images/котик.png" // замените на путь к вашей первой картинке
+    title="Таинственный Кот"
+    description="Этот кот — хранитель древних тайн леса. Он появляется только тем, кто искренне ищет магию."
+  />
+  <AnimalCircle
+    imageSrc="/images/пантерка.png" // замените на путь ко второй картинке
+    title="Лесной Хранитель"
+    description="Стоит лишь прошептать его имя — и он явится, чтобы проводить тебя сквозь самые густые чащи."
+  />
+  <AnimalCircle
+    imageSrc="/images/лисичка.png" // замените на путь к третьей картинке
+    title="Рыжий Мечтатель"
+    description="Он не боится огня — ведь сам родился из заката. Его взгляд согревает даже в самый холодный вечер."
+  />
+</div>
         {/* Кнопка "На главную" с фонарем */}
         <HomeButton />
       </div>

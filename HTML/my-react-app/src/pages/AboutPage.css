@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
+ 
   
   
   color: #e0e1dd; /* Цвет текста */
@@ -179,5 +179,153 @@
   .info-block {
     width: 100%;
     margin-bottom: 20px;
+  }
+}
+/* Центрированный контейнер для трёх кружочков */
+.animal-circles-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 50px 0;
+  flex-wrap: wrap;
+}
+
+.animal-circle-container {
+  position: relative;
+}
+
+.animal-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 3px solid rgba(255, 255, 255, 0);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  padding: 20px;
+}
+
+.animal-circle:hover {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 30px rgba(1, 64, 24, 0.5);
+  border-color: #0233167d;
+}
+
+.animal-circle img {
+  max-width: 150%;
+  max-height: 130%;
+  object-fit: contain;
+  filter: brightness(0.95) contrast(1.1);
+  transition: filter 0.3s ease;
+}
+
+.animal-circle:hover img {
+  filter: brightness(1.1) contrast(1.2);
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+  .animal-circles-wrapper {
+    gap: 25px;
+    margin: 40px 0;
+  }
+  .animal-circle {
+    width: 120px;
+    height: 120px;
+  }
+}
+/* Модальное окно */
+.animal-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animal-modal-content {
+  background: #1a1a1a;
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(2, 126, 54, 0.2);
+  position: relative;
+  animation: slideInUp 0.4s ease-out;
+}
+
+.animal-modal-title {
+  color: #02c754;
+  font-size: 1.4em;
+  margin: 0 0 15px 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.animal-modal-description {
+  color: #fff;
+  font-size: 1em;
+  line-height: 1.6;
+  margin: 0 0 25px 0;
+  text-align: center;
+}
+
+.animal-modal-close {
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  align-self: flex-end;
+  margin-top: 10px;
+}
+
+.animal-modal-close:hover {
+  background: #e0e0e0;
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Мобильная адаптация */
+@media (max-width: 480px) {
+  .animal-modal-content {
+    padding: 20px;
+    max-width: 320px;
+  }
+  .animal-modal-title {
+    font-size: 1.2em;
   }
 }
