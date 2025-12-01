@@ -75,7 +75,7 @@ export default function HomePage() {
                             onClick={playAnimation}
                             className="fixed bottom-25 right-7.5 bg-[#2C4B35] text-white px-7 py-3 rounded-full shadow-xl hover:scale-105 transition"
                             >
-                            Запустить эффект
+                            Запустить магию
                         </button>
 
                         <p className="text-xl text-[#F8F8F9] mb-12 text-center leading-relaxed max-w-2xl mx-auto opacity-90">
