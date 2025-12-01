@@ -49,10 +49,15 @@ export default function Dashboard() {
           <LoadingPage />
         </div>
       ) : (
-        <div className={styles.dashboard}>
-          <div className={styles.backgroundImage}>
-            <img src="/images/registration.jpg" alt="Лес Магии" />
-          </div>
+        <div >
+          <div
+        className="background-image"
+        style={{
+          
+        }}
+      >
+        <img src="/images/фон4.png" alt="Лес" />
+      </div>
 
           <div className={styles.overlay}></div>
           <div className={styles.particle1}></div>
@@ -63,15 +68,15 @@ export default function Dashboard() {
 
           <main className={styles.content}>
             <div className={styles.header}>
-              <h1>Дашборд Продаж</h1>
-              <p className={styles.subtitle}>
+              <h1 className="font-[Chalkduster] text-amber-50">Дашборд Продаж</h1>
+              <p className= "font-[Chalkduster] text-amber-50">
                 Магические записи о потоках золота и серебра
               </p>
             </div>
 
             <div className={styles.sections}>
-              <section className={styles.filtersSection}>
-                <h2>🧭 Фильтры</h2>
+              <section className= {styles.filtersSection}>
+                <h2 className="font-[Chalkduster]">🧭 Фильтры</h2>
                 <Filters
                   sales={sales}
                   selectedShop={selectedShop}
@@ -82,12 +87,12 @@ export default function Dashboard() {
               </section>
 
               <section className={styles.tableSection}>
-                <h2>📜 Сводная таблица</h2>
+                <h2 className="font-[Chalkduster]">📜 Сводная таблица</h2>
                 <SalesTable sales={filteredSales} />
               </section>
 
               <section className={styles.chartSection}>
-                <h2>📈 График продаж</h2>
+                <h2 className="font-[Chalkduster]">📈 График продаж</h2>
                 <SalesChart sales={filteredSales} />
               </section>
             </div>

@@ -46,12 +46,12 @@ export default function CartPage() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className=" font-[Chalkduster] min-h-screen relative overflow-hidden">
       <div className="fixed top-0 left-0 w-full h-full bg-cover bg-center"
            style={{ backgroundImage: 'url(/images/фон.jpg)' }} />
       <div className="fixed top-0 left-0 w-full h-full bg-[#171717]/30 pointer-events-none" />
       <div className="relative z-10 min-h-screen p-8 flex flex-col items-center gap-8">
-        <h1 className="text-4xl font-light text-[#F8F8F9] mb-8">Сокровищница</h1>
+        <h1 className="font-[Chalkduster] text-4xl font-light text-[#F8F8F9] mb-8">Сокровищница</h1>
 
         {/* Корзина */}
         {!isReceiptVisible && cart.length > 0 && (
@@ -65,7 +65,7 @@ export default function CartPage() {
 
         {/* Чек перед подтверждением */}
         {isReceiptVisible && !isOrderFinalized && orderData && (
-          <div className="flex flex-col items-center gap-4">
+          <div className="font-[Chalkduster] flex flex-col items-center gap-4">
             <Receipt
               orderData={orderData}
               stickers={stickers}
@@ -82,7 +82,7 @@ export default function CartPage() {
 
             <button
               onClick={confirmReceipt}
-              className="w-64 bg-gradient-to-r from-[#2C4B35] to-[#1E3525] text-[#F8F8F9] py-3 rounded-xl font-medium text-lg"
+              className="font-[Chalkduster] w-64 bg-gradient-to-r from-[#2C4B35] to-[#1E3525] text-[#F8F8F9] py-3 rounded-xl font-medium text-lg"
             >
               Подтвердить заказ
             </button>
@@ -102,9 +102,9 @@ export default function CartPage() {
 
         {/* Пустая корзина */}
         {cart.length === 0 && !isReceiptVisible && (
-          <div className="text-center text-[#F8F8F9] mt-20">
-            <h2 className="text-3xl mb-4">Корзина пуста</h2>
-            <p className="mb-4">Начните своё путешествие по меню</p>
+          <div className="text-center font-[Chalkduster] text-[#F8F8F9] mt-20">
+            <h2 className="font-[Chalkduster] text-3xl mb-4">Корзина пуста</h2>
+            <p className="font-[Chalkduster] mb-4">Начните своё путешествие по меню</p>
             <button onClick={() => navigate("/")}
                     className="bg-gradient-to-r from-[#2C4B35] to-[#1E3525] px-8 py-3 rounded-xl">
               Исследовать меню

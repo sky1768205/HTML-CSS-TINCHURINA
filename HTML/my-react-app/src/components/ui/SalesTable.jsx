@@ -2,7 +2,7 @@
 export default function SalesTable({ sales }) {
   if (!sales || sales.length === 0) {
     return (
-      <div className="mt-6 text-center text-gray-400" 
+      <div className="font-[Chalkduster] mt-6 text-center text-gray-400" 
            style={{ fontFamily: "'Caveat', cursive", textShadow: '0 0 4px rgba(200, 230, 200, 0.3)' }}>
         Нет данных для отображения 🌫️
       </div>
@@ -10,7 +10,7 @@ export default function SalesTable({ sales }) {
   }
 
   return (
-    <div className="mt-6 overflow-x-auto"
+    <div className=" font-[Chalkduster] mt-6 overflow-x-auto"
          style={{
            background: 'rgba(10, 25, 20, 0.4)',
            backdropFilter: 'blur(8px)',
@@ -22,7 +22,7 @@ export default function SalesTable({ sales }) {
         <thead>
           <tr>
             <th
-              className="py-2 px-4 text-left"
+              className="font-[Chalkduster] py-2 px-4 text-left"
               style={{
                 fontFamily: "'Caveat', cursive",
                 color: '#d6e9d1',
@@ -34,7 +34,7 @@ export default function SalesTable({ sales }) {
               ID
             </th>
             <th
-              className="py-2 px-4 text-left"
+              className="font-[Chalkduster] py-2 px-4 text-left"
               style={{
                 fontFamily: "'Caveat', cursive",
                 color: '#d6e9d1',
@@ -46,7 +46,7 @@ export default function SalesTable({ sales }) {
               Продукт
             </th>
             <th
-              className="py-2 px-4 text-left"
+              className="font-[Chalkduster] py-2 px-4 text-left"
               style={{
                 fontFamily: "'Caveat', cursive",
                 color: '#d6e9d1',
@@ -58,7 +58,7 @@ export default function SalesTable({ sales }) {
               Магазин
             </th>
             <th
-              className="py-2 px-4 text-left"
+              className=" font-[Chalkduster] py-2 px-4 text-left"
               style={{
                 fontFamily: "'Caveat', cursive",
                 color: '#d6e9d1',
@@ -70,7 +70,7 @@ export default function SalesTable({ sales }) {
               Кол-во
             </th>
             <th
-              className="py-2 px-4 text-left"
+              className="font-[Chalkduster] py-2 px-4 text-left"
               style={{
                 fontFamily: "'Caveat', cursive",
                 color: '#d6e9d1',
@@ -82,7 +82,7 @@ export default function SalesTable({ sales }) {
               Сумма
             </th>
             <th
-              className="py-2 px-4 text-left"
+              className="font-[Chalkduster] py-2 px-4 text-left"
               style={{
                 fontFamily: "'Caveat', cursive",
                 color: '#d6e9d1',
@@ -123,7 +123,7 @@ export default function SalesTable({ sales }) {
                 {sale.id}
               </td>
               <td
-                className="py-2 px-4"
+                className="font-[Chalkduster] py-2 px-4"
                 style={{
                   fontFamily: "'Caveat', cursive",
                   color: '#d6e9d1',
@@ -133,7 +133,7 @@ export default function SalesTable({ sales }) {
                 {sale.product_name}
               </td>
               <td
-                className="py-2 px-4"
+                className="font-[Chalkduster] py-2 px-4"
                 style={{
                   fontFamily: "'Caveat', cursive",
                   color: '#a3b18a',
@@ -143,7 +143,7 @@ export default function SalesTable({ sales }) {
                 {sale.shop_address || "—"}
               </td>
               <td
-                className="py-2 px-4 text-center"
+                className="font-[Chalkduster] py-2 px-4 text-center"
                 style={{
                   fontFamily: "'Caveat', cursive",
                   color: '#c8e6c9',
@@ -152,7 +152,7 @@ export default function SalesTable({ sales }) {
                 {sale.quantity}
               </td>
               <td
-                className="py-2 px-4 text-right"
+                className="font-[Chalkduster] py-2 px-4 text-right"
                 style={{
                   fontFamily: "'Caveat', cursive",
                   color: '#86efac',
@@ -162,7 +162,7 @@ export default function SalesTable({ sales }) {
                 {sale.total_price} $
               </td>
               <td
-                className="py-2 px-4"
+                className="font-[Chalkduster] py-2 px-4"
                 style={{
                   fontFamily: "'Caveat', cursive",
                   color: '#9ca3af',

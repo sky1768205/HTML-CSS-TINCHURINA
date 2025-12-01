@@ -2,11 +2,13 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
- 
-  
-  
-  color: #e0e1dd; /* Цвет текста */
-  font-family: 'Brusnika', sans-serif; /* Подставьте ваш шрифт */
+
+
+
+  color: #e0e1dd;
+  /* Цвет текста */
+  font-family: 'Chalkduster', sans-serif;
+  /* Подставьте ваш шрифт */
 }
 
 .background-image {
@@ -17,16 +19,18 @@
   height: 100%;
   z-index: -1;
   overflow: hidden;
-  will-change: transform; 
+  will-change: transform;
 }
 
 .background-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.8); /* Приглушаем фон */
-  
-   filter: brightness(0.8) blur(1px); /* Добавьте blur */
+  filter: brightness(0.8);
+  /* Приглушаем фон */
+
+  filter: brightness(0.8) blur(1px);
+  /* Добавьте blur */
 }
 
 .fireflies {
@@ -70,7 +74,7 @@
 
 .content-container p {
   font-size: 2rem;
-  line-height: 1.6;
+
   margin-bottom: 20px;
 }
 
@@ -94,30 +98,39 @@
   background-color: #ffffff;
   border-radius: 50%;
 }
+
 .title {
   font-size: 3rem;
   margin-bottom: 20px;
   letter-spacing: 2px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Добавьте эту строку */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  /* Добавьте эту строку */
 }
 
 .description {
   font-size: 1.2rem;
   line-height: 1.6;
   margin-bottom: 20px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Добавьте эту строку */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  /* Добавьте эту строку */
 }
+
 .raven {
   position: absolute;
-  top: 10%;          /* Отступ от верха */
-  right: 3%;        /* Отступ от правого края */
-  width: 170px;      /* Размер ворона */
+  top: 10%;
+  /* Отступ от верха */
+  right: 3%;
+  /* Отступ от правого края */
+  width: 170px;
+  /* Размер ворона */
   z-index: 10;
-  pointer-events: none; /* Чтобы не мешал кликам */
+  pointer-events: none;
+  /* Чтобы не мешал кликам */
 
   /* Дополнительно: добавьте тень для глубины */
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
+
 .firefly {
   width: 4px;
   height: 4px;
@@ -125,19 +138,22 @@
   border-radius: 50%;
   box-shadow: 0 0 10px #ffffff;
 }
+
 /* Растушевка и темный фон */
 .fade-to-dark {
   position: relative;
   width: 100%;
-  height: 100vh; /* Можно изменить на нужную высоту */
-  background-color: #0d2a1e; /* Темный фон */
+  height: 120vh;
+  /* Можно изменить на нужную высоту */
+  background-color: #0d2a1e;
+  /* Темный фон */
 
   /* Градиент для растушевки */
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    #021e18dd 80% /* Начинается растушевка с 80% высоты */
-  );
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      #021e18dd 80%
+      /* Начинается растушевка с 80% высоты */
+    );
 }
 
 .info-blocks {
@@ -152,7 +168,8 @@
 .info-block {
   width: 30%;
   padding: 30px;
-  background-color: rgba(1, 18, 12, 0.8); /* Полупрозрачный фон */
+  background-color: rgba(1, 18, 12, 0.8);
+  /* Полупрозрачный фон */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   text-align: center;
@@ -181,6 +198,7 @@
     margin-bottom: 20px;
   }
 }
+
 /* Центрированный контейнер для трёх кружочков */
 .animal-circles-wrapper {
   display: flex;
@@ -236,11 +254,13 @@
     gap: 25px;
     margin: 40px 0;
   }
+
   .animal-circle {
     width: 120px;
     height: 120px;
   }
 }
+
 /* Модальное окно */
 .animal-modal-overlay {
   position: fixed;
@@ -304,8 +324,13 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideInUp {
@@ -313,6 +338,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -325,6 +351,7 @@
     padding: 20px;
     max-width: 320px;
   }
+
   .animal-modal-title {
     font-size: 1.2em;
   }

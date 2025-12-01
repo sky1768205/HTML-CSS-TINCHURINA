@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react"
 import { NavLink } from "react-router"
 import LoadingPage from "./loadingPage"
@@ -52,20 +53,23 @@ export default function BlogPage() {
             <div className="fixed top-0 left-0 w-full h-full bg-[#171717]/40 pointer-events-none" />
 
             {/* Основной контент */}
-            <div className="relative z-10 min-h-screen">
+            <div className="relative z-10 min-h-screen font-[Chalkduster]">
                 <div className="p-8">
                     <div className="max-w-6xl mx-auto">
 
                         {/* Заголовок в стиле книги */}
-                        <div className="text-center mb-16 pt-20">
+                        <div className="text-center mb-16 pt-20 font-[Chalkduster] ">
                             <div className="mb-6">
-                                <span className="text-[#F8F8F9]/60 text-sm tracking-widest font-light">
+                                <span className= "font-[Chalkduster] text-[#F8F8F9]/60 text-sm tracking-widest font-light">
                                     СКАНДИНАВСКАЯ МУДРОСТЬ
                                 </span>
                             </div>
-                            <h1 className="text-6xl font-serif text-[#F8F8F9] mb-4 tracking-tight leading-tight drop-shadow-2xl">
-                                ТАИНСТВЕННЫЙ БЛОГ
-                            </h1>
+                            <h1 
+  className="text-6xl text-[#F8F8F9] mb-4 tracking-tight leading-tight drop-shadow-2xl"
+  style={{ fontFamily: "'Chalkduster', cursive" }}
+>
+  ТАИНСТВЕННЫЙ БЛОГ
+</h1>
                             <div className="w-48 h-0.5 bg-[#2C4B35]/60 mx-auto shadow-lg mb-6"></div>
                             <p className="text-[#F8F8F9]/70 text-lg font-light max-w-2xl mx-auto leading-relaxed">
                                 Где боги встречаются с кофе, а каждый пост — это страница древней саги
@@ -73,13 +77,14 @@ export default function BlogPage() {
                         </div>
 
                         {/* Сетка постов */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pb-24">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pb-24 " style={{ fontFamily: "'Chalkduster', cursive" }}
+>
 
                             {posts.map((post, index) => (
-                                <NavLink
+                                <NavLink 
                                     key={post.id}
                                     to={`/blog/${post.id}`}
-                                    className="block"
+                                    className="block font-[Chalkduster]"
                                 >
                                     <div className="bg-[#2c463393] backdrop-blur-sm rounded-2xl border border-[#F8F8F9]/20 overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
 
@@ -108,7 +113,7 @@ export default function BlogPage() {
                                             {/* Декоративный элемент */}
                                             <div className="absolute top-0 left-8 w-16 h-0.5 bg-[#2C4B35]/40 -translate-y-1"></div>
 
-                                            <h3 className="font-serif text-2xl text-[#F8F8F9] mb-4 leading-tight group-hover:text-[#6c776f] transition-colors duration-300">
+                                            <h3 className=" text-2xl text-[#F8F8F9] mb-4 leading-tight group-hover:text-[#6c776f] transition-colors duration-300">
                                                 {post.title}
                                             </h3>
 

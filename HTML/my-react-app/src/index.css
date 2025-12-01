@@ -33,3 +33,25 @@
 .animate-shine {
   animation: shine 2s ease-in-out infinite;
 }
+/* Подключаем шрифт Chalkduster */
+@font-face {
+  font-family: 'Chalkduster';
+  src: url('/fonts/Chalkduster.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* чтобы текст не исчезал при загрузке */
+}
+
+/* Вспомогательный класс для применения шрифта */
+.font-chalkduster {
+  font-family: 'Chalkduster', 'Brush Script MT', cursive, sans-serif;
+}
+.glowing {
+  box-shadow:
+    0 0 20px rgba(0, 170, 102, 0.8),
+    0 0 35px rgba(2, 142, 91, 0.6) !important;
+  border-color: #1ab880 !important;
+  transform: scale(1.025) !important;
+  z-index: 20;
+  transition: all 0.2s ease !important;
+}

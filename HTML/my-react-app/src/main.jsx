@@ -1,3 +1,4 @@
+import './text.css';  // ← эта строка должна быть первой
 import ReactDOM from "react-dom/client";
 import './index.css'
 import { router } from "./routes";
