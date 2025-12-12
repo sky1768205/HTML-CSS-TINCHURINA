@@ -37,6 +37,7 @@ class Database {
                     name TEXT,
                     email TEXT UNIQUE,
                     password TEXT NOT NULL,
+                    role TEXT DEFAULT 'user',
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 );
 
@@ -102,64 +103,31 @@ class Database {
     }
 
     // Метод для регистрации пользователя
-    register(userData) {
+    register({ name, email, password }) {
         return new Promise((resolve, reject) => {
-            const { name, email, password } = userData;
-
-            if (!email || !password) {
-                return reject(new Error('Email и пароль обязательны'));
-            }
-
-            const query = `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`;
-
-            this.db.run(query, [name, email, password], function(err) {
-                if (err) {
-                    if (err.message.includes('UNIQUE constraint failed')) {
-                        reject(new Error('Пользователь с таким email уже существует'));
-                    } else {
-                        reject(err);
-                    }
-                } else {
-                    resolve({
-                        id: this.lastID,
-                        name,
-                        email,
-                        message: 'Пользователь успешно зарегистрирован'
-                    });
-                }
+            const query = `INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'user')`;
+            this.db.run(query, [name, email, password], function (err) {
+                if (err) return reject(err);
+                resolve({ id: this.lastID });
             });
         });
     }
 
     // Метод для авторизации пользователя
-    login(credentials) {
+    login({ email, password }) {
         return new Promise((resolve, reject) => {
-            const { email, password } = credentials;
-
-            if (!email || !password) {
-                return reject(new Error('Email и пароль обязательны'));
-            }
-
-            const query = `SELECT id, name, email, created_at FROM users WHERE email = ? AND password = ?`;
-
+            const query = `
+                SELECT id, name, email, role, created_at 
+                FROM users 
+                WHERE email = ? AND password = ?
+            `;
             this.db.get(query, [email, password], (err, row) => {
-                if (err) {
-                    reject(err);
-                } else if (row) {
-                    resolve({
-                        id: row.id,
-                        name: row.name,
-                        email: row.email,
-                        created_at: row.created_at,
-                        message: 'Авторизация успешна'
-                    });
-                } else {
-                    reject(new Error('Неверный email или пароль'));
-                }
+                if (err) return reject(err);
+                if (!row) return reject(new Error("Invalid credentials"));
+                resolve(row);
             });
         });
     }
-
     // Метод для получения всех товаров
     getAllProducts() {
         return new Promise((resolve, reject) => {
@@ -335,129 +303,63 @@ class Database {
     }
 
     // Метод для создания товара
-    createProduct(productData) {
+    createProduct({ title, price, shop_id }) {
         return new Promise((resolve, reject) => {
-            const { name, price, description, image_url, category } = productData;
-
-            // Валидация обязательных полей
-            if (!name || !price) {
-                return reject(new Error('Название и цена товара обязательны'));
-            }
-
-            const query = `
-            INSERT INTO products (name, price, description, image_url, category)
-            VALUES (?, ?, ?, ?, ?)
-        `;
-
-            this.db.run(query, [name, price, description, image_url, category], function(err) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({
-                        id: this.lastID,
-                        name,
-                        price,
-                        description,
-                        image_url,
-                        category,
-                        message: 'Товар успешно создан'
-                    });
-                }
+            const query = `INSERT INTO products (title, price, shop_id) VALUES (?, ?, ?)`;
+            this.db.run(query, [title, price, shop_id], function (err) {
+                if (err) return reject(err);
+                resolve({ id: this.lastID });
             });
         });
     }
 
-    // Метод для создания магазина
-    createShop(shopData) {
+    updateProduct(id, { title, price, shop_id }) {
         return new Promise((resolve, reject) => {
-            const { address, phone, latitude, longitude } = shopData;
-
-            // Валидация обязательных полей
-            if (!address) {
-                return reject(new Error('Адрес магазина обязателен'));
-            }
-
-            const query = `
-            INSERT INTO shops (address, phone, latitude, longitude)
-            VALUES (?, ?, ?, ?)
-        `;
-
-            this.db.run(query, [address, phone, latitude, longitude], function(err) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({
-                        id: this.lastID,
-                        address,
-                        phone,
-                        latitude,
-                        longitude,
-                        message: 'Магазин успешно создан'
-                    });
-                }
-            });
-        });
-    }// Метод для создания товара
-    createProduct(productData) {
-        return new Promise((resolve, reject) => {
-            const { name, price, description, image_url, category } = productData;
-
-            // Валидация обязательных полей
-            if (!name || !price) {
-                return reject(new Error('Название и цена товара обязательны'));
-            }
-
-            const query = `
-            INSERT INTO products (name, price, description, image_url, category)
-            VALUES (?, ?, ?, ?, ?)
-        `;
-
-            this.db.run(query, [name, price, description, image_url, category], function(err) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({
-                        id: this.lastID,
-                        name,
-                        price,
-                        description,
-                        image_url,
-                        category,
-                        message: 'Товар успешно создан'
-                    });
-                }
+            const q = `UPDATE products SET title=?, price=?, shop_id=? WHERE id=?`;
+            this.db.run(q, [title, price, shop_id, id], function (err) {
+                if (err) return reject(err);
+                resolve({ updated: this.changes });
             });
         });
     }
 
-    // Метод для создания магазина
-    createShop(shopData) {
+    deleteProduct(id) {
         return new Promise((resolve, reject) => {
-            const { address, phone, latitude, longitude } = shopData;
+            this.db.run(`DELETE FROM products WHERE id = ?`, [id], function (err) {
+                if (err) return reject(err);
+                resolve();
+            });
+        });
+    }
 
-            // Валидация обязательных полей
-            if (!address) {
-                return reject(new Error('Адрес магазина обязателен'));
-            }
+    createShop({ name, address }) {
+        return new Promise((resolve, reject) => {
+            const query = `INSERT INTO shops (name, address) VALUES (?, ?)`;
+            this.db.run(query, [name, address], function (err) {
+                if (err) return reject(err);
+                resolve({ id: this.lastID });
+            });
+        });
+    }
 
-            const query = `
-            INSERT INTO shops (address, phone, latitude, longitude)
-            VALUES (?, ?, ?, ?)
-        `;
-
-            this.db.run(query, [address, phone, latitude, longitude], function(err) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({
-                        id: this.lastID,
-                        address,
-                        phone,
-                        latitude,
-                        longitude,
-                        message: 'Магазин успешно создан'
-                    });
+    updateShop(id, { name, address }) {
+        return new Promise((resolve, reject) => {
+            this.db.run(
+                `UPDATE shops SET name=?, address=? WHERE id=?`,
+                [name, address, id],
+                function (err) {
+                    if (err) return reject(err);
+                    resolve({ updated: this.changes });
                 }
+            );
+        });
+    }
+
+    deleteShop(id) {
+        return new Promise((resolve, reject) => {
+            this.db.run(`DELETE FROM shops WHERE id=?`, [id], function (err) {
+                if (err) return reject(err);
+                resolve();
             });
         });
     }
@@ -486,6 +388,28 @@ class Database {
                     sale_date: sale_date || new Date(),
                     message: 'Продажа добавлена'
                 });
+            });
+        });
+    }
+
+    updateSale(id, { amount, date }) {
+        return new Promise((resolve, reject) => {
+            this.db.run(
+                `UPDATE sales SET amount=?, date=? WHERE id=?`,
+                [amount, date, id],
+                function (err) {
+                    if (err) return reject(err);
+                    resolve({ updated: this.changes });
+                }
+            );
+        });
+    }
+
+    deleteSale(id) {
+        return new Promise((resolve, reject) => {
+            this.db.run(`DELETE FROM sales WHERE id=?`, [id], function (err) {
+                if (err) return reject(err);
+                resolve();
             });
         });
     }
@@ -532,18 +456,89 @@ class Database {
     }
 
     // Создать новый пост
-    createBlogPost(postData) {
+    createBlogPost({ title, content }) {
         return new Promise((resolve, reject) => {
-            const { title, excerpt, date, image_url } = postData;
-            const query = `INSERT INTO blog_posts (title, excerpt, date, image_url) VALUES (?, ?, ?, ?)`;
-            this.db.run(query, [title, excerpt, date, image_url], function(err) {
-                if (err) reject(err);
-                else resolve({ id: this.lastID, title, excerpt, date, image_url });
+            const query = `INSERT INTO blog (title, content) VALUES (?, ?)`;
+            this.db.run(query, [title, content], function (err) {
+                if (err) return reject(err);
+                resolve({ id: this.lastID });
             });
         });
     }
 
+        updateBlogPost(id, { title, content }) {
+        return new Promise((resolve, reject) => {
+            this.db.run(
+                `UPDATE blog SET title=?, content=? WHERE id=?`,
+                [title, content, id],
+                function (err) {
+                    if (err) return reject(err);
+                    resolve({ updated: this.changes });
+                }
+            );
+        });
+    }
 
+    deleteBlogPost(id) {
+        return new Promise((resolve, reject) => {
+            this.db.run(`DELETE FROM blog WHERE id=?`, [id], function (err) {
+                if (err) return reject(err);
+                resolve();
+            });
+        });
+    }
+
+     // Получить всех пользователей
+    getAllUsers() {
+        return new Promise((resolve, reject) => {
+            this.db.all(`SELECT id, email, role, created_at FROM users`, (err, rows) => {
+                if (err) reject(err);
+                else resolve(rows);
+            });
+        });
+    }
+
+    // Получить пользователя по id
+    getUserById(id) {
+        return new Promise((resolve, reject) => {
+            this.db.get(`SELECT id, email, role, created_at FROM users WHERE id = ?`, [id], (err, row) => {
+                if (err) reject(err);
+                else resolve(row);
+            });
+        });
+    }
+
+    // Создать пользователя
+    createUser(email, passwordHash, role = 'user') {
+        return new Promise((resolve, reject) => {
+            const stmt = `INSERT INTO users (email, password, role, created_at) VALUES (?, ?, ?, ?)`;
+            this.db.run(stmt, [email, passwordHash, role, new Date().toISOString()], function(err) {
+                if (err) reject(err);
+                else resolve({ id: this.lastID, email, role });
+            });
+        });
+    }
+
+    // Обновить пользователя
+    updateUser(id, email, role) {
+        return new Promise((resolve, reject) => {
+            const stmt = `UPDATE users SET email = ?, role = ? WHERE id = ?`;
+            this.db.run(stmt, [email, role, id], function(err) {
+                if (err) reject(err);
+                else resolve({ id, email, role });
+            });
+        });
+    }
+
+    // Удалить пользователя
+    deleteUser(id) {
+        return new Promise((resolve, reject) => {
+            this.db.run(`DELETE FROM users WHERE id = ?`, [id], function(err) {
+                if (err) reject(err);
+                else resolve({ id });
+            });
+        });
+    }
 
     // Метод для закрытия соединения
     close() {

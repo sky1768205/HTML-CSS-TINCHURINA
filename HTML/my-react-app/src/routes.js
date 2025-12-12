@@ -12,6 +12,7 @@ import Account from "./pages/Account.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import BlogPage from "./pages/BlogPage.jsx";
 import BlogItemPage from "./pages/BlogItemPage.jsx";
+import AdminDashboard from "./components/AdminDashboard.jsx";
 
 
 
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
             {
                 path: '/blog/:id',
                 Component: BlogItemPage
+            },
+            {
+                path: '/admin',
+                Component: AdminDashboard
             },
             {
                 path:'*',

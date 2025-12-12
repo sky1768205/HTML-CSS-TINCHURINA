@@ -1,304 +1,61 @@
-// Подключаем необходимые модули
+// server.js
+// ===========================
+//        ИМПОРТЫ
+// ===========================
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-// Подключаем базу
 const Database = require('./database');
 
-// Инициализация Express и порта
+// ===========================
+//     ИНИЦИАЛИЗАЦИЯ
+// ===========================
 const app = express();
 const PORT = process.env.PORT || 3000;
+const db = new Database();
 
-// Middleware
+// ===========================
+//       MIDDLEWARE
+// ===========================
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/images', express.static(path.join(__dirname, '../images')));
+app.use('/images', express.static(path.join(__dirname, '../images'))); // если у тебя есть папка images
 
-// Инициализация базы данных
-const db = new Database();
+// Простой мидлвер для роли (пока через заголовок x-role)
+function checkAdmin(req, res, next) {
+    const role = (req.headers["x-role"] || '').toString();
+    if (role !== "admin") {
+        return res.status(403).json({ success: false, error: "Access denied: admin only" });
+    }
+    next();
+}
 
-// Middleware для обработки ошибок базы данных
+// Вшиваем объект db в req если нужно в middleware/роутах
 app.use((req, res, next) => {
     req.db = db;
     next();
 });
 
-// Регистрация пользователя
-app.post('/api/register', async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
-        const result = await db.register({ name, email, password });
-        res.status(201).json({
-            success: true,
-            data: result
-        });
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            error: error.message
-        });
-    }
+// ===========================
+//      КОРНЕВЫЕ МАРШРУТЫ
+// ===========================
+
+// Health check
+app.get('/health', (req, res) => {
+    res.json({ success: true, status: 'ok', time: new Date().toISOString() });
 });
 
-// Авторизация пользователя
-app.post('/api/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const result = await db.login({ email, password });
-        res.json({
-            success: true,
-            data: result
-        });
-    } catch (error) {
-        res.status(401).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// Получение всех товаров
-app.get('/api/products', async (req, res) => {
-    try {
-        const products = await db.getAllProducts();
-        res.json({
-            success: true,
-            data: products,
-            count: products.length
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// Получение товара по ID
-app.get('/api/products/:id', async (req, res) => {
-    try {
-        const productId = parseInt(req.params.id);
-        const product = await db.getProductById(productId);
-        res.json({
-            success: true,
-            data: product
-        });
-    } catch (error) {
-        res.status(404).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// Получение отзывов по product_id
-app.get('/api/products/:id/reviews', async (req, res) => {
-    try {
-        const productId = parseInt(req.params.id);
-        const reviews = await db.getReviewsByProductId(productId);
-        res.json({
-            success: true,
-            data: reviews,
-            count: reviews.length
-        });
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// Получение отзывов по user_id
-app.get('/api/users/:id/reviews', async (req, res) => {
-    try {
-        const userId = parseInt(req.params.id);
-        const reviews = await db.getReviewsByUserId(userId);
-        res.json({
-            success: true,
-            data: reviews,
-            count: reviews.length
-        });
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// Создание отзыва
-app.post('/api/reviews', async (req, res) => {
-    try {
-        const { user_id, product_id, review, stars } = req.body;
-        const result = await db.createReview({
-            user_id: parseInt(user_id),
-            product_id: parseInt(product_id),
-            review,
-            stars: parseInt(stars)
-        });
-        res.status(201).json({
-            success: true,
-            data: result
-        });
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// Получение всех магазинов
-app.get('/api/shops', async (req, res) => {
-    try {
-        const shops = await db.getAllShops();
-        res.json({
-            success: true,
-            data: shops,
-            count: shops.length
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// Создание товара
-app.post('/api/products', async (req, res) => {
-    try {
-        const { name, price, description, image_url, category } = req.body;
-        const result = await db.createProduct({
-            name,
-            price: parseFloat(price),
-            description,
-            image_url,
-            category
-        });
-        res.status(201).json({
-            success: true,
-            data: result
-        });
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// Создание магазина
-app.post('/api/shops', async (req, res) => {
-    try {
-        const { address, phone, latitude, longitude } = req.body;
-        const result = await db.createShop({
-            address,
-            phone,
-            latitude: latitude ? parseFloat(latitude) : null,
-            longitude: longitude ? parseFloat(longitude) : null
-        });
-        res.status(201).json({
-            success: true,
-            data: result
-        });
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// Добавление продажи
-app.post('/api/sales', async (req, res) => {
-    try {
-        const { product_id, shop_id, quantity, total_price, sale_date } = req.body;
-        const result = await db.createSale({
-            product_id: parseInt(product_id),
-            shop_id: shop_id ? parseInt(shop_id) : null,
-            quantity: parseInt(quantity),
-            total_price: parseFloat(total_price),
-            sale_date
-        });
-        res.status(201).json({ success: true, data: result });
-    } catch (error) {
-        res.status(400).json({ success: false, error: error.message });
-    }
-});
-
-// Получение статистики
-app.get('/api/sales/stats', async (req, res) => {
-    try {
-        const { startDate, endDate } = req.query;
-        const stats = await db.getSalesStats({ startDate, endDate });
-        res.json({ success: true, data: stats });
-    } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
-    }
-});
-
-// Получение всех продаж
-app.get('/api/sales', async (req, res) => {
-    try {
-        const sales = await db.getAllSales();
-        res.json({
-            success: true,
-            data: sales,
-            count: sales.length
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// GET all blog posts
-app.get('/api/blog', async (req, res) => {
-    try {
-        const posts = await db.getAllBlogPosts();
-        res.json({ success: true, data: posts });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
-    }
-});
-
-// GET blog post by ID
-app.get('/api/blog/:id', async (req, res) => {
-    try {
-        const post = await db.getBlogPostById(req.params.id)
-        res.json({ success: true, data: post })
-    } catch (err) {
-        if (err.message === 'Пост не найден') {
-            res.status(404).json({ success: false, error: 'Post not found' })
-        } else {
-            res.status(500).json({ success: false, error: err.message })
-        }
-    }
-})
-
-// CREATE new blog post
-app.post('/api/blog', async (req, res) => {
-    const { title, excerpt, date, image_url } = req.body
-    try {
-        const newPost = await db.createBlogPost({ title, excerpt, date, image_url })
-        res.json({ success: true, data: newPost })
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message })
-    }
-})
-
-// Корневой маршрут
+// Root — краткая информация и список важных эндпойнтов
 app.get('/', (req, res) => {
     res.json({
         success: true,
         message: 'API работает',
-        endpoints: {
+        server_time: new Date().toISOString(),
+        docs: {
+            health: 'GET /health',
+            api_root: 'GET /api',
             auth: {
                 register: 'POST /api/register',
                 login: 'POST /api/login'
@@ -306,32 +63,325 @@ app.get('/', (req, res) => {
             products: {
                 getAll: 'GET /api/products',
                 getById: 'GET /api/products/:id',
-                create: 'POST /api/products'
-            },
-            reviews: {
-                getByProduct: 'GET /api/products/:id/reviews',
-                getByUser: 'GET /api/users/:id/reviews',
-                create: 'POST /api/reviews'
+                create: 'POST /api/admin/products (admin)',
+                update: 'PUT /api/admin/products/:id (admin)',
+                delete: 'DELETE /api/admin/products/:id (admin)'
             },
             shops: {
                 getAll: 'GET /api/shops',
-                create: 'POST /api/shops'
+                create: 'POST /api/admin/shops (admin)',
+                update: 'PUT /api/admin/shops/:id (admin)',
+                delete: 'DELETE /api/admin/shops/:id (admin)'
             },
             sales: {
-                create: 'POST /api/sales', // Добавление продажи
-                stats: 'GET /api/sales/stats?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD' // Статистика продаж
+                getAll: 'GET /api/sales',
+                create: 'POST /api/admin/sales',
+                update: 'PUT /api/admin/sales/:id (admin)',
+                delete: 'DELETE /api/admin/sales/:id (admin)',
+                stats: 'GET /api/sales/stats?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD'
             },
-            blog_posts: {
-                getAll: 'GET /api/blog',      // <-- совпадает с реальным маршрутом
-                getById: 'GET /api/blog/:id', // <-- совпадает с реальным маршрутом
-                create: 'POST /api/blog'      // <-- совпадает с реальным маршрутом
+            reviews: {
+                byProduct: 'GET /api/products/:id/reviews',
+                byUser: 'GET /api/users/:id/reviews',
+                create: 'POST /api/reviews'
+            },
+            blog: {
+                getAll: 'GET /api/blog',
+                getById: 'GET /api/blog/:id',
+                create: 'POST /api/admin/blog (admin)',
+                update: 'PUT /api/admin/blog/:id (admin)',
+                delete: 'DELETE /api/admin/blog/:id (admin)'
+            },
+            users: {
+                getAll: 'GET /api/admin/users (admin)',
+                getById: 'GET /api/admin/users/:id (admin)',
+                create: 'POST /api/admin/users (admin)',
+                update: 'PUT /api/admin/users/:id (admin)',
+                delete: 'DELETE /api/admin/users/:id (admin)'
             }
-        }
+        },
     });
 });
 
+// Более подробный API-root (можно вернуть то же самое или расширить)
+app.get('/api', (req, res) => {
+    res.json({
+        success: true,
+        message: 'API root. Use / (root) for endpoints list.',
+    });
+});
 
-// Middleware для обработки ошибок
+// ===========================
+//  АУТЕНТИФИКАЦИЯ (PUBLIC)
+// ===========================
+app.post('/api/register', async (req, res) => {
+    try {
+        const result = await db.register(req.body);
+        res.status(201).json({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+app.post('/api/login', async (req, res) => {
+    try {
+        const result = await db.login(req.body);
+        res.json({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+// ===========================
+//      ПУБЛИЧНЫЕ API
+// ===========================
+app.get('/api/products', async (req, res) => {
+    try {
+        const items = await db.getAllProducts();
+        res.json({ success: true, count: items.length, data: items });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+app.get('/api/products/:id', async (req, res) => {
+    try {
+        const product = await db.getProductById(parseInt(req.params.id));
+        res.json({ success: true, data: product });
+    } catch (err) {
+        res.status(404).json({ success: false, error: err.message });
+    }
+});
+
+app.get('/api/products/:id/reviews', async (req, res) => {
+    try {
+        const reviews = await db.getReviewsByProductId(parseInt(req.params.id));
+        res.json({ success: true, count: reviews.length, data: reviews });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+app.get('/api/shops', async (req, res) => {
+    try {
+        const items = await db.getAllShops();
+        res.json({ success: true, count: items.length, data: items });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+app.get('/api/sales', async (req, res) => {
+    try {
+        const items = await db.getAllSales();
+        res.json({ success: true, count: items.length, data: items });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+app.get('/api/blog', async (req, res) => {
+    try {
+        const posts = await db.getAllBlogPosts();
+        res.json({ success: true, count: posts.length, data: posts });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+app.get('/api/blog/:id', async (req, res) => {
+    try {
+        const post = await db.getBlogPostById(parseInt(req.params.id));
+        res.json({ success: true, data: post });
+    } catch (err) {
+        if (err.message === 'Пост не найден') {
+            res.status(404).json({ success: false, error: 'Post not found' });
+        } else {
+            res.status(500).json({ success: false, error: err.message });
+        }
+    }
+});
+
+// ===========================
+//         АДМИН API
+// ===========================
+// Эндпоинты для управления пользователями (только для админа)
+app.get('/api/admin/users', checkAdmin, async (req, res) => {
+    try {
+        const users = await db.getAllUsers();
+        res.json({ success: true, data: users });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+app.get('/api/admin/users/:id', checkAdmin, async (req, res) => {
+    try {
+        const user = await db.getUserById(req.params.id);
+        res.json({ success: true, data: user });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+app.post('/api/admin/users', checkAdmin, async (req, res) => {
+    try {
+        const { email, passwordHash, role } = req.body;
+        const newUser = await db.createUser(email, passwordHash, role);
+        res.json({ success: true, data: newUser });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+app.put('/api/admin/users/:id', checkAdmin, async (req, res) => {
+    try {
+        const { email, role } = req.body;
+        const updatedUser = await db.updateUser(req.params.id, email, role);
+        res.json({ success: true, data: updatedUser });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+app.delete('/api/admin/users/:id', checkAdmin, async (req, res) => {
+    try {
+        const deletedUser = await db.deleteUser(req.params.id);
+        res.json({ success: true, data: deletedUser });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+// PRODUCTS
+app.post('/api/admin/products', checkAdmin, async (req, res) => {
+    try {
+        const result = await db.createProduct(req.body);
+        res.status(201).json({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+app.put('/api/admin/products/:id', checkAdmin, async (req, res) => {
+    try {
+        const result = await db.updateProduct(parseInt(req.params.id), req.body);
+        res.json({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+app.delete('/api/admin/products/:id', checkAdmin, async (req, res) => {
+    try {
+        await db.deleteProduct(parseInt(req.params.id));
+        res.json({ success: true, message: "Product deleted" });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+// SHOPS
+app.post('/api/admin/shops', checkAdmin, async (req, res) => {
+    try {
+        const result = await db.createShop(req.body);
+        res.status(201).json({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+app.put('/api/admin/shops/:id', checkAdmin, async (req, res) => {
+    try {
+        const result = await db.updateShop(parseInt(req.params.id), req.body);
+        res.json({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+app.delete('/api/admin/shops/:id', checkAdmin, async (req, res) => {
+    try {
+        await db.deleteShop(parseInt(req.params.id));
+        res.json({ success: true, message: "Shop deleted" });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+// SALES
+// Создание новой продажи
+app.post('/api/admin/sales', checkAdmin, async (req, res) => {
+    try {
+        const { product_id, shop_id, quantity, total_price } = req.body;
+
+        // Можно добавить базовую проверку
+        if (!product_id || !shop_id || !quantity || !total_price) {
+            return res.status(400).json({ success: false, error: "Все поля обязательны" });
+        }
+
+        const result = await db.createSale({
+            product_id: parseInt(product_id),
+            shop_id: parseInt(shop_id),
+            quantity: parseInt(quantity),
+            total_price: parseFloat(total_price)
+        });
+
+        res.json({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+app.put('/api/admin/sales/:id', checkAdmin, async (req, res) => {
+    try {
+        const result = await db.updateSale(parseInt(req.params.id), req.body);
+        res.json({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+app.delete('/api/admin/sales/:id', checkAdmin, async (req, res) => {
+    try {
+        await db.deleteSale(parseInt(req.params.id));
+        res.json({ success: true, message: "Sale deleted" });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+// BLOG (admin)
+app.post('/api/admin/blog', checkAdmin, async (req, res) => {
+    try {
+        const result = await db.createBlogPost(req.body);
+        res.status(201).json({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+app.put('/api/admin/blog/:id', checkAdmin, async (req, res) => {
+    try {
+        const result = await db.updateBlogPost(parseInt(req.params.id), req.body);
+        res.json({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+app.delete('/api/admin/blog/:id', checkAdmin, async (req, res) => {
+    try {
+        await db.deleteBlogPost(parseInt(req.params.id));
+        res.json({ success: true, message: "Blog post deleted" });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+
+
+// ===========================
+//     ГЛОБАЛЬНАЯ ОБРАБОТКА ОШИБОК
+// ===========================
 app.use((error, req, res, next) => {
     console.error('Ошибка сервера:', error);
     res.status(500).json({
@@ -340,23 +390,29 @@ app.use((error, req, res, next) => {
     });
 });
 
-// Запуск сервера
-const startServer = async () => {
-
-    app.listen(PORT, () => {
-        console.log(`Сервер запущен на порту ${PORT}`);
-        console.log(`API доступно по адресу: http://localhost:${PORT}/api`);
-    });
-};
-
-// Завершение работы сервера при прерывании процесса
-process.on('SIGINT', async () => {
-    console.log('\nЗавершение работы сервера...');
-    if (db) {
-        await db.close();
-    }
-    process.exit(0);
+// ===========================
+//       ЗАПУСК СЕРВЕРА
+// ===========================
+const server = app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
 
-startServer().catch(console.error);
-//deploy on gitverse
+// Грейсфул-шатдаун: закрываем БД по SIGINT/SIGTERM
+async function gracefulShutdown() {
+    console.log('\nShutting down server...');
+    if (db && typeof db.close === 'function') {
+        try {
+            await db.close();
+            console.log('DB connection closed.');
+        } catch (err) {
+            console.error('Error closing DB:', err);
+        }
+    }
+    server.close(() => {
+        console.log('HTTP server closed.');
+        process.exit(0);
+    });
+}
+
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);

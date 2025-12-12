@@ -86,11 +86,25 @@ export default function MainLayout() {
 
                                 {/* Кнопки справа */}
                                 <div className="flex items-center gap-x-6">
-                                    <NavLink to="/account" className="relative group">
-                                        <div className="rounded-lg bg-[#2C4B35]/20 hover:bg-[#2C4B35]/30 transition-all border border-[#2C4B35]/50 hover:border-[#F8F8F9]/50">
-                                            <img className="w-12 h-12" src="/images/Frame 2 (1).png" alt="" />
+                                    {/* Админ-панель — показывается только если user есть и role === "admin" */}
+                                    {user && user.role === "admin" && (
+                                        <div className="flex items-center gap-4">
+                                                                                    <NavLink
+                                            to="/admin"
+                                            className="px-4 py-2 bg-[#2C4B35] text-[#F8F8F9] rounded-lg hover:scale-105 transition-all border border-[#F8F8F9]/30"
+                                        >
+                                            Админ
+                                        </NavLink>
+                                        <NavLink to="/account" className="relative group">
+                                            <div className="rounded-lg bg-[#2C4B35]/20 hover:bg-[#2C4B35]/30 transition-all border border-[#2C4B35]/50 hover:border-[#F8F8F9]/50">
+                                                <img className="w-12 h-12" src="/images/Frame 2 (1).png" alt="" />
+                                            </div>
+                                        </NavLink>
                                         </div>
-                                    </NavLink>
+
+                                        
+                                    )}
+
 
                                     <NavLink to="/cart" className="relative group">
                                         <div className="rounded-lg bg-[#2C4B35]/20 hover:bg-[#2C4B35]/30 transition-all border border-[#2C4B35]/50 hover:border-[#F8F8F9]/50">
