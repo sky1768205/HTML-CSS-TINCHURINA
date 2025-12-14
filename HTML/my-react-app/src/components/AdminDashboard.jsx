@@ -175,7 +175,7 @@ export default function AdminDashboard() {
                             </button>
                             <button
                                 onClick={() => handleDelete(item.id)}
-                                className="px-2 py-1 bg-red-600 rounded hover:bg-red-700"
+                                className="px-2 py-1 bg-green-600 rounded hover:bg-green-700"
                             >
                                 Удалить
                             </button>
@@ -195,9 +195,8 @@ export default function AdminDashboard() {
                         <button
                             key={sec}
                             onClick={() => setSection(sec)}
-                            className={`text-left px-4 py-2 rounded-lg w-full ${
-                                section === sec ? "bg-[#2C4B35] text-[#F8F8F9]" : "hover:bg-[#2C4B35]/30"
-                            }`}
+                            className={`text-left px-4 py-2 rounded-lg w-full ${section === sec ? "bg-[#2C4B35] text-[#F8F8F9]" : "hover:bg-[#2C4B35]/30"
+                                }`}
                         >
                             {sec === "shops" && "Магазины"}
                             {sec === "products" && "Товары"}
